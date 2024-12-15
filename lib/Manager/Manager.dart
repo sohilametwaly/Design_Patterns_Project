@@ -5,15 +5,15 @@ import 'package:design_patterns_project/Manager/WorkerManager.dart';
 
 class Manager {
   final WorkerManager workerManager;
-  final Incometracker incometracker;
+  final Incometracker incomeTracker;
   final Roommonitoring roomMonitor;
-  final Residentviewer residentviewer;
+  final Residentviewer residentViewer;
 
   Manager(
       {required this.workerManager,
-      required this.incometracker,
+      required this.incomeTracker,
       required this.roomMonitor,
-      required this.residentviewer});
+      required this.residentViewer});
 
   void addWorker(Worker worker) {
     this.workerManager.addWorker(worker);
@@ -34,7 +34,7 @@ class Manager {
 
   // Room Monitoring
   void monitorRooms() {
-    this.roomMonitor.monitorRoom();
+    this.roomMonitor.monitorRooms();
   }
 
   // Income Tracking

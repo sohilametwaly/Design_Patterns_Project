@@ -1,3 +1,3 @@
 abstract class Roommonitoring {
-  Map<String, Map<String, dynamic>> monitorRooms();
+  Future<Map<String, Map<String, dynamic>>> monitorRooms();
 }
