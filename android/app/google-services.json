@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "488549004817",
+    "firebase_url": "https://design-patterns-c29fd-default-rtdb.firebaseio.com",
+    "project_id": "design-patterns-c29fd",
+    "storage_bucket": "design-patterns-c29fd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488549004817:android:da08b424861ec340d823b0",
+        "android_client_info": {
+          "package_name": "com.example.design_patterns_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0suIyawRb8kuncwZGazkmk3e6pOJKQDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
