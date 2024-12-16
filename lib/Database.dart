@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'firebase_options.dart';
 
 class Database {
-  static final FirebaseDatabase _database = FirebaseDatabase.instance;;
+  static final FirebaseDatabase _database = FirebaseDatabase.instance;
 }
 
 // await Firebase.initializeApp(
