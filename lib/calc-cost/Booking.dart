@@ -1,9 +1,10 @@
 import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoardingOption.dart';
+import 'package:design_patterns_project/abstract_room.dart';
 
 class Booking {
    int _id;
    int _DurationOfStay;
-   AbstarctRoom _room ;
+  AbstractRoom _room ;
    AbstractBoardingOption _boardingOption;
 
 
