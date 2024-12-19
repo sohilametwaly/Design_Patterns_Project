@@ -13,6 +13,7 @@ class realauth implements Authentication {
   }
 
   Future<void> signup(String username, String password, String email) async {
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
   }
 }

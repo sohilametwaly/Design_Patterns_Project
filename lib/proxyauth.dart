@@ -1,8 +1,13 @@
+import 'package:design_patterns_project/User.dart';
 import 'package:design_patterns_project/authentication.dart';
 import 'package:design_patterns_project/realauth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'Database.dart';
 
 class Proxyauth implements Authentication {
   final realauth real = realauth();
+  Database database = Database.getInstance();
+  bool isManager = false;
 
   Future<void> login(String email, String password) async {
     if (validateInputs(email, password)) {
@@ -23,6 +28,15 @@ class Proxyauth implements Authentication {
   Future<void> signup(String username, String password, String email) async {
     if (validateInputs(email, password) && email.contains('@')) {
       await real.signup(username, password, email);
+      Map<String, dynamic> data = {
+        'username': username,
+        'email': email,
+        'isManager': isManager
+      };
+      firebase_auth.User? currentUser =
+          firebase_auth.FirebaseAuth.instance.currentUser;
+      String userId = currentUser!.uid;
+      database.writeData('users/$userId', data);
     } else {
       throw Exception('Invalid signup details');
     }
