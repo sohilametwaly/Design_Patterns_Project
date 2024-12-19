@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import 'package:design_patterns_project/abstract_room.dart';
+=======
+>>>>>>> 445f2e0 (calculate cost)
 import 'package:design_patterns_project/calc-cost/CostCalculationStrategy.dart';
 import 'package:flutter/material.dart';
 

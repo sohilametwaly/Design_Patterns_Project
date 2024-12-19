@@ -1,10 +1,17 @@
 import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoardingOption.dart';
+<<<<<<< HEAD
 import 'package:design_patterns_project/abstract_room.dart';
+=======
+>>>>>>> 445f2e0 (calculate cost)
 
 class Booking {
    int _id;
    int _DurationOfStay;
+<<<<<<< HEAD
   AbstractRoom _room ;
+=======
+   AbstarctRoom _room ;
+>>>>>>> 445f2e0 (calculate cost)
    AbstractBoardingOption _boardingOption;
 
 
