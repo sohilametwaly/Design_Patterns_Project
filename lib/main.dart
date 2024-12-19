@@ -8,6 +8,7 @@ import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
 import 'package:design_patterns_project/resident_list/addResident.dart';
 
 import 'package:design_patterns_project/Database.dart';
+import 'package:design_patterns_project/signup/signuppage.dart';
 
 import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
