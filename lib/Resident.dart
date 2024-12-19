@@ -1,5 +1,4 @@
-//Resident
-
+git add .
 import 'package:design_patterns_project/calc-cost/Booking.dart';
 
 class Resident {

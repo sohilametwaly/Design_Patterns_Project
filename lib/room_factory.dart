@@ -6,7 +6,6 @@ import 'triple_room.dart';
 
 class RoomFactory {
   static AbstractRoom createRoom(String roomType, int roomNumber) {
-
     if (roomType == "Single") {
       return SingleRoom(roomNumber);
     }else if(roomType == "Double"){
