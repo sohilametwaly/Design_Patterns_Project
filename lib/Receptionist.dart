@@ -1,7 +1,6 @@
 import 'package:design_patterns_project/abstract_room.dart';
 import 'package:design_patterns_project/room_factory.dart';
 import 'package:design_patterns_project/user.dart';
-
 import 'Resident.dart';
 import 'ResidentManagement.dart';
 
