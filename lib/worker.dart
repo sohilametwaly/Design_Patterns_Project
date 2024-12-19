@@ -1,10 +1,11 @@
-class worker {
+class Worker {
+  String id;
   String name = '';
   String phone = '';
   double salary;
   String jobTitle = '';
 
-  worker(this.name, this.phone, this.salary, this.jobTitle);
+  Worker(this.id, this.name, this.phone, this.salary, this.jobTitle);
 
   String get _name => name;
   set _name(String value) {
@@ -28,5 +29,15 @@ class worker {
   String get _jobTitle => jobTitle;
   set _jobTitle(String value) {
     jobTitle = value;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'salary': salary,
+      'phone': phone,
+      'jobTitle': jobTitle
+    };
   }
 }

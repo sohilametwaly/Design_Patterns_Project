@@ -2,6 +2,7 @@ import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Manager/ResidentViewer.dart';
 import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
 import 'package:design_patterns_project/Manager/WorkerManager.dart';
+import 'package:design_patterns_project/worker.dart';
 
 class Manager {
   final WorkerManager workerManager;
