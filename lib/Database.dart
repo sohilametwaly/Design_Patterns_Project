@@ -49,7 +49,9 @@ class Database {
       final data = snapshot.value as Map<dynamic, dynamic>;
 
       final Map<String, dynamic> mappedData = data.map(
-        (key, value) => MapEntry(
+
+            (key, value) => MapEntry(
+
           key.toString(),
           value,
         ),
@@ -64,4 +66,6 @@ class Database {
     await _ensureInitialized();
     await _ref.child(path).remove();
   }
+
 }
+

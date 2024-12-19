@@ -32,4 +32,6 @@ class User {
   setRole(String value) {
     _role = value;
   }
+
 }
+

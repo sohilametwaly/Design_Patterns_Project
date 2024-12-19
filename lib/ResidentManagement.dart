@@ -1,6 +1,5 @@
 
 import 'Resident.dart';
-
 class ResidentManagement {
   final Map<int, Resident> _listOfResidents = {};
 
