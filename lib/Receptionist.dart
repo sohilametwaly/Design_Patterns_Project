@@ -4,14 +4,15 @@ import 'Resident.dart';
 import 'ResidentManagement.dart';
 import 'package:design_patterns_project/roomAssigner.dart';
 
-class Receptionist  {
+class Receptionist {
   final ResidentManagement residentManagement;
   //final Map<Resident, AbstractRoom> _listOfAssignedRooms = {};
- // final Resident resident=Resident();
+  // final Resident resident=Resident();
   final RoomAssigner roomAssigner;
   Receptionist(
-    // super.username, super.password, super.role,
-   this.residentManagement, this.roomAssigner);
+      // super.username, super.password, super.role,
+      this.residentManagement,
+      this.roomAssigner);
 
 //   void addResident(Resident resident, String desiredRoomType) async {
 //   final roomDetails = await roomAssigner.assignRoom(resident, desiredRoomType);
@@ -24,20 +25,20 @@ class Receptionist  {
 //   }
 // }
 
-  Future<Map<String, dynamic>?> assignRoom(Resident resident, String desiredRoomType){
+  Future<Map<String, dynamic>?> assignRoom(
+      Resident resident, String desiredRoomType) {
     return this.roomAssigner.assignRoom(resident, desiredRoomType);
   }
-  
+
   void addResident(Resident resident) {
     //roomAssigner.assignRoom(resident, desiredRoomType);
     this.residentManagement.addResident(resident);
-    
+
     //print("added in receptionist");
-    
   }
 
   void editResident(String id, Resident newResident) {
-    this.residentManagement.editResident(id , newResident);
+    this.residentManagement.editResident(id, newResident);
   }
 
   void deleteResident(String id) {
@@ -47,8 +48,6 @@ class Receptionist  {
   Future<Map<String, Map<String, dynamic>>> viewResidents() {
     return this.residentManagement.viewResidents();
   }
-
-
 
   // void assignRoom(int roomNum, String roomType, Resident resident) {
   //   if (_listOfAssignedRooms.containsKey(resident)) {
