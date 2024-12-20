@@ -7,12 +7,14 @@ import 'ResidentManagement.dart';
 class Receptionist extends User {
   final ResidentManagement _residentManagement = ResidentManagement();
   final Map<Resident, AbstractRoom> _listOfAssignedRooms = {};
-  final Resident resident=Resident();
+
+  ResidentManagement get residentManagement => _residentManagement;
+
   Receptionist(super.username, super.password, super.role);
 
   void assignRoom(int roomNum, String roomType, Resident resident) {
     if (_listOfAssignedRooms.containsKey(resident)) {
-      print("Resident ${resident.getName()} is already assigned to a room.");
+      print("Resident ${ resident.getName()} is already assigned to a room.");
     } else {
       try {
         AbstractRoom room = RoomFactory.createRoom(roomType, roomNum);

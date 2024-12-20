@@ -1,14 +1,14 @@
 import 'package:design_patterns_project/calc-cost/Booking.dart';
 
 class Resident {
-  int? _id;
+  String? _id;
   String? _name;
   String? _email;
   String? _phone;
   Booking? _booking;
 
 
-  Resident({int? id, String? name, String? email, String? phone, Booking? booking}) {
+  Resident({String? id, String? name, String? email, String? phone, Booking? booking}) {
     _id = id;
     _name = name;
     _email = email;
@@ -24,9 +24,9 @@ class Resident {
   }
 
 
-  int? getId() => _id;
+  String? getId() => _id;
 
-  void setId(int id) {
+  void setId(String id) {
     _id = id;
   }
 

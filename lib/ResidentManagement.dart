@@ -2,25 +2,27 @@
 import 'Resident.dart';
 
 class ResidentManagement {
-  final Map<int, Resident> _listOfResidents = {};
+  static final  Map<String, Resident> listOfResidents = {};
+
 
   void addResident(Resident resident) {
-    _listOfResidents[resident.getId()!] = resident;
+    // int id = int.parse(resident.getId());
+    listOfResidents[resident.getId()!] = resident;
     // Insert Resident into database
   }
 
-  void editResident(Resident newResident, int id) {
-    final currentResident = _listOfResidents[id];
+  void editResident(Resident newResident, String id) {
+    final currentResident = listOfResidents[id];
     if (currentResident != null) {
       currentResident.setName(newResident.getName()!);
       currentResident.setEmail(newResident.getEmail()!);
       currentResident.setPhone(newResident.getPhone()!);
+      currentResident.setId(newResident.getId().toString());
       // Edit in the database
     }
   }
-
-  void deleteResident(int id) {
-    _listOfResidents.remove(id);
+  void deleteResident(String id) {
+    listOfResidents.remove(id);
     // Remove from the database
   }
 }
