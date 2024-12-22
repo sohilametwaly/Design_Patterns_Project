@@ -8,7 +8,6 @@ import 'package:design_patterns_project/calc-cost/Booking.dart';
 import 'package:design_patterns_project/abstract_room.dart';
 import 'package:design_patterns_project/Abstract Boarding Option/AbstractBoardingOption.dart';
 import 'package:design_patterns_project/Abstract Boarding Option/BoardingOptionFactory.dart';
-import 'package:design_patterns_project/room_factory.dart';
 import '../Database.dart';
 
 class ResidentListScreen extends StatefulWidget {
@@ -21,7 +20,6 @@ class ResidentListScreen extends StatefulWidget {
 class _ResidentListScreenState extends State<ResidentListScreen> {
   late ResidentManagement management;
 
-
   //  late Receptionist management = ;
   @override
   void initState() {
@@ -31,13 +29,11 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
     int id = int.parse(widget.residentData['id']);
     int duration = int.parse(widget.residentData['durationOfStay']);
 
-
-    AbstractRoom room = RoomFactory.createRoom(
-        widget.residentData['roomType'], roomNum);
+    AbstractRoom room =
+        RoomFactory.createRoom(widget.residentData['roomType'], roomNum);
     AbstractBoardingOption option = Boardingoptionfactory.CreateBoardingOption(
         widget.residentData['boardingOption']);
     Booking booking = Booking(id, duration, room, option);
-
 
     Resident resident = Resident(
       id: widget.residentData['id'],
@@ -48,8 +44,7 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
     );
     management.addResident(resident);
 
-
-          // Add to static list of residents
+    // Add to static list of residents
   }
 
   @override
@@ -57,7 +52,6 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Resident List"),
-
         elevation: 0,
       ),
       body: Container(
@@ -65,13 +59,14 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
         child: ListView.builder(
           itemCount: ResidentManagement.listOfResidents.length,
           itemBuilder: (context, index) {
-            Resident resident = ResidentManagement.listOfResidents.values.elementAt(index);
+            Resident resident =
+                ResidentManagement.listOfResidents.values.elementAt(index);
             AbstractRoom room = resident.booking!.room;
             AbstractBoardingOption option = resident.booking!.boardingOption;
             return Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 8.0, horizontal: 16.0),
-              child:InkWell(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: InkWell(
                 onTap: () async {
                   final updatedResident = await Navigator.push(
                       context,
@@ -82,14 +77,15 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                             'id': resident.getId(),
                             'email': resident.getEmail(),
                             'roomType': room.getRoomType(),
-                            'selectedRoom': resident.booking!.room.roomNumber.toString(),
+                            'selectedRoom':
+                                resident.booking!.room.roomNumber.toString(),
                             'boardingOption': option.getMealPlan(),
-                            'durationOfStay': resident.booking!.DurationOfStay.toString(),
+                            'durationOfStay':
+                                resident.booking!.DurationOfStay.toString(),
                             'phone': resident.getPhone(),
                           },
                         ),
-                      )
-                  );
+                      ));
                   if (updatedResident != null) {
                     setState(() {
                       management.editResident(
@@ -99,8 +95,7 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                           email: updatedResident['email'],
                           phone: updatedResident['phone'],
                         ),
-                        (resident.getId() ?? 'N/A') ,
-
+                        (resident.getId() ?? 'N/A'),
                       );
                     });
                   }
@@ -109,12 +104,15 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => BookingDetails(residentId: resident.getId()??" ") // Replace with your target page
-                    ),
+                        builder: (_) => BookingDetails(
+                            residentId: resident.getId() ??
+                                " ") // Replace with your target page
+                        ),
                   );
                 },
 
-                borderRadius: BorderRadius.circular(16.0), // Matches card's border radius
+                borderRadius:
+                    BorderRadius.circular(16.0), // Matches card's border radius
                 child: Card(
                   elevation: 6.0,
                   shadowColor: Colors.grey.withOpacity(0.5),
@@ -168,7 +166,6 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                   ),
                 ),
               ),
-
             );
           },
         ),
@@ -184,7 +181,6 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
             ),
           );
 
-
           if (newResidentData != null) {
             setState(() {
               int roomNum = int.parse(newResidentData['selectedRoom']);
@@ -192,10 +188,11 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                   1; // Increment ID based on existing list
               int duration = int.parse(newResidentData['durationOfStay']);
 
-              AbstractRoom room = RoomFactory.createRoom(
-                  newResidentData['roomType'], roomNum);
-              AbstractBoardingOption option = Boardingoptionfactory
-                  .CreateBoardingOption(newResidentData['boardingOption']);
+              AbstractRoom room =
+                  RoomFactory.createRoom(newResidentData['roomType'], roomNum);
+              AbstractBoardingOption option =
+                  Boardingoptionfactory.CreateBoardingOption(
+                      newResidentData['boardingOption']);
               Booking booking = Booking(id, duration, room, option);
 
               Resident newResident = Resident(
@@ -207,8 +204,10 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
               );
 
               management.addResident(newResident);
-              late Receptionist receptionist= Receptionist("Receptionist", "123", "receptionist");
-              receptionist.assignRoom(roomNum, newResidentData['roomType'].toString(), newResident);
+              late Receptionist receptionist =
+                  Receptionist("Receptionist", "123", "receptionist");
+              receptionist.assignRoom(
+                  roomNum, newResidentData['roomType'].toString(), newResident);
             });
           }
         },
@@ -227,7 +226,6 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
     });
   }
 
-
   Widget _buildResidentTitle(String name, String email, String id) {
     return Row(
       children: [
@@ -237,7 +235,8 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
             children: [
               Text(
                 name,
-                style: TextStyle(fontSize: 20,
+                style: TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blueAccent),
               ),
@@ -262,7 +261,6 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
     );
   }
 
-
   Widget _buildResidentInfoRow(IconData icon, String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -272,33 +270,31 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
           SizedBox(width: 10),
           Expanded(
               child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "$title: ", // Title
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "  ",
-                      // Adds a fixed amount of space between the title and value
-                      style: TextStyle(fontSize: 16), // Optional
-                    ),
-                    TextSpan(
-                      text: value, // Value
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87, // Value color
-                      ),
-                    ),
-                  ],
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "$title: ", // Title
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )
-
-          ),
+                TextSpan(
+                  text: "  ",
+                  // Adds a fixed amount of space between the title and value
+                  style: TextStyle(fontSize: 16), // Optional
+                ),
+                TextSpan(
+                  text: value, // Value
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87, // Value color
+                  ),
+                ),
+              ],
+            ),
+          )),
         ],
       ),
     );
@@ -314,6 +310,4 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
       print("No residents found!");
     }
   }
-
-
 }
