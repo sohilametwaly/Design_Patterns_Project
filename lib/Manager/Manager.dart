@@ -1,13 +1,13 @@
 import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Manager/ResidentViewer.dart';
-import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
+import 'package:design_patterns_project/Manager/RoomMonitor.dart';
 import 'package:design_patterns_project/Manager/WorkerManager.dart';
 import 'package:design_patterns_project/worker.dart';
 
 class Manager {
   final WorkerManager workerManager;
   final Incometracker incomeTracker;
-  final Roommonitoring roomMonitor;
+  final Roommonitor roomMonitor;
   final Residentviewer residentViewer;
 
   Manager(
@@ -28,10 +28,12 @@ class Manager {
     this.workerManager.deleteWorker(id);
   }
 
+
   // Workers Details
-  void viewWorkers() {
-    this.workerManager.viewWorkers();
+  Future<Map<String, Map<String, dynamic>>> viewWorkers() {
+    return this.workerManager.viewWorkers();
   }
+
 
   // Room Monitoring
   void monitorRooms() {
