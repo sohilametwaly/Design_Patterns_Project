@@ -2,38 +2,38 @@ import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoa
 import 'package:design_patterns_project/abstract_room.dart';
 
 class Booking {
-  int _id;
-  int _DurationOfStay;
-  AbstractRoom _room;
-  AbstractBoardingOption _boardingOption;
+  int id;
+  int DurationOfStay;
+  AbstractRoom room;
+  AbstractBoardingOption boardingOption;
 
-  Booking(this._id, this._DurationOfStay, this._room, this._boardingOption);
+  Booking(this.id, this.DurationOfStay, this.room, this.boardingOption);
 
-  int get id => _id;
+  // int get id => _id;
 
-  set id(int newId) {
-    _id = newId;
-  }
+  // set id(int newId) {
+  //   _id = newId;
+  // }
 
-  int get DurationOfStay => _DurationOfStay;
+  // int get DurationOfStay => _DurationOfStay;
 
-  set DurationOfStay(int newDuration) {
-    _DurationOfStay = newDuration;
-  }
+  // set DurationOfStay(int newDuration) {
+  //   _DurationOfStay = newDuration;
+  // }
 
-  AbstractRoom get room => _room;
+  // AbstractRoom get room => _room;
 
-  set room(AbstractRoom newRoom) {
-    _room = newRoom;
-  }
+  // set room(AbstractRoom newRoom) {
+  //   _room = newRoom;
+  // }
 
-  AbstractBoardingOption get boardingOption => _boardingOption;
+  // AbstractBoardingOption get boardingOption => _boardingOption;
 
-  set boardingOption(AbstractBoardingOption newBoardingOption) {
-    _boardingOption = newBoardingOption;
-  }
+  // set boardingOption(AbstractBoardingOption newBoardingOption) {
+  //   _boardingOption = newBoardingOption;
+  // }
 
   void displayDetails() {
-    print('$_DurationOfStay $_boardingOption $_room $_id');
+    print('$DurationOfStay $boardingOption $room $id');
   }
 }

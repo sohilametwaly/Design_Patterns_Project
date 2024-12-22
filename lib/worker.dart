@@ -40,4 +40,14 @@ class Worker {
       'jobTitle': jobTitle
     };
   }
+
+   factory Worker.fromMap(Map<String, dynamic> map) {
+    return Worker(
+     map['id'],
+     map['name'],
+     map['phone'],
+    (map['salary'] is int) ? (map['salary'] as int).toDouble() : map['salary'] as double,
+     map['jobTitle'],
+    );
+  }
 }
