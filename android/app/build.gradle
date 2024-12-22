@@ -29,6 +29,10 @@ android {
         versionName = flutter.versionName
     }
 
+      defaultConfig {
+        minSdkVersion 23  // Update this to at least 23
+    }
+
     buildTypes {
         release {
             // Use debug signing for now

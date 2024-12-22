@@ -2,11 +2,9 @@
 import 'Resident.dart';
 
 class ResidentManagement {
-  static final  Map<String, Resident> listOfResidents = {};
-
+ static final   Map<String, Resident> listOfResidents = {};
 
   void addResident(Resident resident) {
-    // int id = int.parse(resident.getId());
     listOfResidents[resident.getId()!] = resident;
     // Insert Resident into database
   }
@@ -17,10 +15,10 @@ class ResidentManagement {
       currentResident.setName(newResident.getName()!);
       currentResident.setEmail(newResident.getEmail()!);
       currentResident.setPhone(newResident.getPhone()!);
-      currentResident.setId(newResident.getId().toString());
       // Edit in the database
     }
   }
+
   void deleteResident(String id) {
     listOfResidents.remove(id);
     // Remove from the database

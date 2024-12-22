@@ -98,7 +98,8 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                           name: updatedResident['name'],
                           email: updatedResident['email'],
                           phone: updatedResident['phone'],
-                        ),resident.getId() ?? 'N/A',
+                        ),
+                        (resident.getId() ?? 'N/A') ,
 
                       );
                     });
@@ -207,7 +208,7 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
 
               management.addResident(newResident);
               late Receptionist receptionist= Receptionist("Receptionist", "123", "receptionist");
-              receptionist.assignRoom(roomNum, newResidentData['roomType'].toString(), newResident,true);
+              receptionist.assignRoom(roomNum, newResidentData['roomType'].toString(), newResident);
             });
           }
         },
