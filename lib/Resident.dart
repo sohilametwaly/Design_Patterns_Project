@@ -6,60 +6,14 @@ class Resident {
   String? _name;
   String? _email;
   String? _phone;
-  Booking? _booking;
-<<<<<<< HEAD
-=======
 
+  int? getId() => _id;
 
-  Resident({int? id, String? name, String? email, String? phone, Booking? booking}) {
-    _id = id;
-    _name = name;
-    _email = email;
-    _phone = phone;
-    _booking = booking;
-  }
-
-
-  Booking? get booking => _booking;
-
-  set booking(Booking? value) {
-    _booking = value;
-  }
-
->>>>>>> de568be (added new receptionist)
-
-
-<<<<<<< HEAD
-  Resident({String? id, String? name, String? email, String? phone, Booking? booking}) {
-    _id = id;
-    _name = name;
-    _email = email;
-    _phone = phone;
-    _booking = booking;
-  }
-
-
-  Booking? get booking => _booking;
-
-  set booking(Booking? value) {
-    _booking = value;
-  }
-
-
-  String? getId() => _id;
-
-  void setId(String id) {
-    _id = id;
-  }
-
-
-=======
   void setId(int id) {
-    _id = id;
+    this._id = id;
   }
 
 
->>>>>>> de568be (added new receptionist)
   String? getName() => _name;
 
   void setName(String name) {
