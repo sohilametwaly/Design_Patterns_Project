@@ -1,8 +1,7 @@
-
 import 'Resident.dart';
 
 class ResidentManagement {
- static final   Map<String, Resident> listOfResidents = {};
+  static final Map<String, Resident> listOfResidents = {};
 
   void addResident(Resident resident) {
     listOfResidents[resident.getId()!] = resident;
