@@ -1,5 +1,6 @@
 import 'package:design_patterns_project/Receptionist.dart';
 import 'package:design_patterns_project/ResidentManagement.dart';
+import 'package:design_patterns_project/resident_list/BookingDetails.dart';
 import 'package:design_patterns_project/resident_list/addResident.dart';
 import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Resident.dart';
@@ -8,7 +9,6 @@ import 'package:design_patterns_project/abstract_room.dart';
 import 'package:design_patterns_project/Abstract Boarding Option/AbstractBoardingOption.dart';
 import 'package:design_patterns_project/Abstract Boarding Option/BoardingOptionFactory.dart';
 import 'package:design_patterns_project/room_factory.dart';
-
 import '../Database.dart';
 
 class ResidentListScreen extends StatefulWidget {
@@ -20,12 +20,13 @@ class ResidentListScreen extends StatefulWidget {
 
 class _ResidentListScreenState extends State<ResidentListScreen> {
   late ResidentManagement management;
+
+
   //  late Receptionist management = ;
   @override
   void initState() {
     super.initState();
     management = ResidentManagement();
-
     int roomNum = int.parse(widget.residentData['selectedRoom']);
     int id = int.parse(widget.residentData['id']);
     int duration = int.parse(widget.residentData['durationOfStay']);
@@ -45,7 +46,10 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
       phone: widget.residentData['phone'],
       booking: booking,
     );
-    management.addResident(resident); // Add to static list of residents
+    management.addResident(resident);
+
+
+          // Add to static list of residents
   }
 
   @override
@@ -61,11 +65,9 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
         child: ListView.builder(
           itemCount: ResidentManagement.listOfResidents.length,
           itemBuilder: (context, index) {
-            Resident resident = ResidentManagement.listOfResidents.values
-                .elementAt(index);
+            Resident resident = ResidentManagement.listOfResidents.values.elementAt(index);
             AbstractRoom room = resident.booking!.room;
             AbstractBoardingOption option = resident.booking!.boardingOption;
-
             return Padding(
               padding: const EdgeInsets.symmetric(
                   vertical: 8.0, horizontal: 16.0),
@@ -102,6 +104,15 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                     });
                   }
                 },
+                onLongPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => BookingDetails(residentId: resident.getId()??" ") // Replace with your target page
+                    ),
+                  );
+                },
+
                 borderRadius: BorderRadius.circular(16.0), // Matches card's border radius
                 child: Card(
                   elevation: 6.0,
@@ -131,26 +142,26 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                           "Phone",
                           resident.getPhone() ?? "N/A",
                         ),
-                        _buildResidentInfoRow(
-                          Icons.meeting_room,
-                          "Room Type",
-                          room.getRoomType(),
-                        ),
-                        _buildResidentInfoRow(
-                          Icons.room_preferences,
-                          "Room Number",
-                          resident.booking!.room.roomNumber.toString(),
-                        ),
-                        _buildResidentInfoRow(
-                          Icons.restaurant_menu,
-                          "Boarding Option",
-                          option.getMealPlan(),
-                        ),
-                        _buildResidentInfoRow(
-                          Icons.calendar_today,
-                          "Duration of Stay",
-                          "${resident.booking!.DurationOfStay} days",
-                        ),
+                        // _buildResidentInfoRow(
+                        //   Icons.meeting_room,
+                        //   "Room Type",
+                        //   room.getRoomType(),
+                        // ),
+                        // _buildResidentInfoRow(
+                        //   Icons.room_preferences,
+                        //   "Room Number",
+                        //   resident.booking!.room.roomNumber.toString(),
+                        // ),
+                        // _buildResidentInfoRow(
+                        //   Icons.restaurant_menu,
+                        //   "Boarding Option",
+                        //   option.getMealPlan(),
+                        // ),
+                        // _buildResidentInfoRow(
+                        //   Icons.calendar_today,
+                        //   "Duration of Stay",
+                        //   "${resident.booking!.DurationOfStay} days",
+                        // ),
                       ],
                     ),
                   ),
@@ -180,13 +191,11 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
                   1; // Increment ID based on existing list
               int duration = int.parse(newResidentData['durationOfStay']);
 
-
               AbstractRoom room = RoomFactory.createRoom(
                   newResidentData['roomType'], roomNum);
               AbstractBoardingOption option = Boardingoptionfactory
                   .CreateBoardingOption(newResidentData['boardingOption']);
               Booking booking = Booking(id, duration, room, option);
-
 
               Resident newResident = Resident(
                 id: id.toString(),
@@ -197,6 +206,8 @@ class _ResidentListScreenState extends State<ResidentListScreen> {
               );
 
               management.addResident(newResident);
+              late Receptionist receptionist= Receptionist("Receptionist", "123", "receptionist");
+              receptionist.assignRoom(roomNum, newResidentData['roomType'].toString(), newResident,true);
             });
           }
         },

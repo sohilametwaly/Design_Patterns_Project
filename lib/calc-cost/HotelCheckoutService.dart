@@ -1,11 +1,11 @@
 import 'package:design_patterns_project/abstract_room.dart';
 import 'package:design_patterns_project/calc-cost/CostCalculationStrategy.dart';
 import 'package:flutter/material.dart';
+import '../room_factory.dart';
 
 class HotelCheckoutService {
 AbstractRoom _Room ;
 CostCalculationStrategy _boardingStrategy;
-
 HotelCheckoutService(this._Room,this._boardingStrategy);
  
 
@@ -23,9 +23,10 @@ HotelCheckoutService(this._Room,this._boardingStrategy);
 
    }
 
-   calculateTotalCost(int nights){
-      return _boardingStrategy.calculateCost(nights);
-   }
+   // calculateTotalCost(int nights){
+   //    return _boardingStrategy.calculateCost(nights);
+   // }
+
 
 
 }

@@ -12,7 +12,7 @@ class Receptionist extends User {
 
   Receptionist(super.username, super.password, super.role);
 
-  void assignRoom(int roomNum, String roomType, Resident resident) {
+  void assignRoom(int roomNum, String roomType, Resident resident , bool availability) {
     if (_listOfAssignedRooms.containsKey(resident)) {
       print("Resident ${ resident.getName()} is already assigned to a room.");
     } else {

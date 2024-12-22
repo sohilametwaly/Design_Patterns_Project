@@ -236,7 +236,7 @@ class _AddResidentScreenState extends State<AddResidentScreen> {
                         'durationOfStay': durationOfStay.text,
                         'phone':phone.text
                       };
-                      // addResidentData(residentId.text.toString(), residentEmail.text.toString(),residentName.text.toString(),phone.text.toString(),roomType.text.toString(),int.parse(selectedRoom!),boardingOptions!,int.parse(durationOfStay.text.toString()));
+                      addResidentData(residentId.text.toString(), residentEmail.text.toString(),residentName.text.toString(),phone.text.toString(),roomType.text.toString(),int.parse(selectedRoom!),boardingOptions!,int.parse(durationOfStay.text.toString()));
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -249,6 +249,9 @@ class _AddResidentScreenState extends State<AddResidentScreen> {
                             ? "Update "
                             : "Add "),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // Set the background color
+                      foregroundColor: Colors.white, // Set the text color
+                      elevation: 5, // Optional: Add elevation
                       minimumSize: Size(double.infinity, 50),
                     ),
                   ),
@@ -279,23 +282,54 @@ class _AddResidentScreenState extends State<AddResidentScreen> {
   }
 
   void addResidentData(String id,String email, String name,String phone, String roomType, int roomNum, String boardingOption, int durationOfStay) async {
-    final database = Database.getInstance();
-    final residentData = {
+    Database database = Database.getInstance();
+    Map<String,dynamic> residentData = {
       "id": id,
       "phone":phone,
       "email":email,
       "name": name,
-      "roomType": roomType,
-      "roomNum": roomNum,
-      "boardingOption": boardingOption,
-      "durationOfStay": durationOfStay
+      "Booking":
+      {
+        "roomType": roomType,
+        "roomNum": roomNum,
+        "boardingOption": boardingOption,
+        "durationOfStay": durationOfStay
+      }
+
     };
     final path = "residents/${DateTime.now().millisecondsSinceEpoch}";
     await database.writeData(path, residentData);
     print("Resident added successfully at path: $path");
   }
 
+  void BoardingData() async {
+    final database = Database.getInstance();
 
+    Map<String,dynamic> boardingOptions = {
+      "FullBoard": {"price": 300},
+      "HalfBoard": {"price": 150},
+      "BedAndBreakFast": {"price": 100},
+    };
+    final path = "boardingOptions";
+
+    await database.writeData(path, boardingOptions);
+
+    print("options added successfully at path: $path");
+  }
+
+  void addRoomData() async {
+    final database = Database.getInstance();
+
+    Map<String,dynamic> roomTypes = {
+      "Single": {"price": 300},
+      "Double": {"price": 150},
+      "triple": {"price": 100},
+    };
+    final path = "roomTypes";
+
+    await database.writeData(path, roomTypes);
+    print("options added successfully at path: $path");
+  }
 
 
 }
