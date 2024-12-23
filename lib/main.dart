@@ -1,4 +1,5 @@
 
+import 'package:design_patterns_project/Room_list_screen.dart';
 import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
 import 'package:design_patterns_project/resident_list/addResident.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AddResidentScreen(),
+      home: RoomListScreen(),
     );
   }
 }
