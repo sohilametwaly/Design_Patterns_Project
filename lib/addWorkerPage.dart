@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/worker.dart';
 
-
 class AddWorkerPage extends StatefulWidget {
   final Manager manager;
 
@@ -19,11 +18,10 @@ class _AddWorkerPageState extends State<AddWorkerPage> {
   final _phoneController = TextEditingController();
   final _salaryController = TextEditingController();
 
-
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
       final worker = Worker(
-         DateTime.now().millisecondsSinceEpoch.toString(),
+        DateTime.now().millisecondsSinceEpoch.toString(),
         _nameController.text,
         _phoneController.text,
         double.tryParse(_salaryController.text) ?? 0.0,
@@ -31,7 +29,7 @@ class _AddWorkerPageState extends State<AddWorkerPage> {
       );
 
       widget.manager.addWorker(worker);
-      Navigator.pop(context,true);
+      Navigator.pop(context, true);
     }
   }
 
