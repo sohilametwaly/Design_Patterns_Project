@@ -97,12 +97,12 @@ class _ResidentListPageState extends State<ResidentListPage> {
 
   void _deleteResident(String id) async {
     print(id);
-    int roomId = await database.readData('residents/${id}/booking/room').length;
-    setState(() {
-      print(roomId);
+    Map<dynamic, dynamic> room =
+        await database.readData('residents/${id}/booking/room');
 
-      Map<String, dynamic> updateData = {'occuiped': false};
-      database.updateData('Rooms/${roomId}', updateData);
+    setState(() {
+      Map<String, dynamic> updateData = {'occupied': false};
+      database.updateData('Rooms/${room['id']}', updateData);
       widget.receptionist.deleteResident(id);
     });
   }

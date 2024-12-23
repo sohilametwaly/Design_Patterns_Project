@@ -40,7 +40,11 @@ class _EditResidentPageState extends State<EditResidentPage> {
   final checkInController = TextEditingController();
   final checkOutController = TextEditingController();
 
-  final List<String> boardingOptions = ['Full Board', 'Half Board', 'Bed & Breakfast'];
+  final List<String> boardingOptions = [
+    'Full Board',
+    'Half Board',
+    'Bed & Breakfast'
+  ];
   final List<String> roomTypes = ['Single', 'Double', 'Triple'];
 
   @override
@@ -51,9 +55,12 @@ class _EditResidentPageState extends State<EditResidentPage> {
     nameController = TextEditingController(text: widget.data['name']);
     phoneController = TextEditingController(text: widget.data['phone']);
     emailController = TextEditingController(text: widget.data['email']);
-    roomIdController = TextEditingController(text: widget.data['booking']['room']['id'].toString());
-    roomPriceController = TextEditingController(text: widget.data['booking']['room']['price'].toString());
-    boardingCostController = TextEditingController(text: widget.data['booking']['boarding']['costPerNight'].toString());
+    roomIdController = TextEditingController(
+        text: widget.data['booking']['room']['id'].toString());
+    roomPriceController = TextEditingController(
+        text: widget.data['booking']['room']['price'].toString());
+    boardingCostController = TextEditingController(
+        text: widget.data['booking']['boarding']['costPerNight'].toString());
 
     // Room and Boarding Data
     selectedRoomType = widget.data['booking']['room']['roomType'];
@@ -63,8 +70,10 @@ class _EditResidentPageState extends State<EditResidentPage> {
     // Date Initialization
     checkInDate = DateTime.parse(widget.data['booking']['checkInDate']);
     checkOutDate = DateTime.parse(widget.data['booking']['checkOutDate']);
-    checkInController.text = widget.data['booking']['checkInDate'].split('T')[0];
-    checkOutController.text = widget.data['booking']['checkOutDate'].split('T')[0];
+    checkInController.text =
+        widget.data['booking']['checkInDate'].split('T')[0];
+    checkOutController.text =
+        widget.data['booking']['checkOutDate'].split('T')[0];
   }
 
   @override
@@ -117,7 +126,9 @@ class _EditResidentPageState extends State<EditResidentPage> {
                   if (value == null || value.trim().isEmpty) {
                     return 'Email is required';
                   }
-                  if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
+                  if (!RegExp(
+                          r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                      .hasMatch(value)) {
                     return 'Invalid email format';
                   }
                   return null;
@@ -125,24 +136,31 @@ class _EditResidentPageState extends State<EditResidentPage> {
               ),
 
               SizedBox(height: 20),
-              Text('Room Details', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Room Details',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               TextFormField(
                 controller: roomPriceController,
                 decoration: InputDecoration(labelText: 'Room Price'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value == null || double.tryParse(value) == null || double.parse(value) <= 0) {
+                  if (value == null ||
+                      double.tryParse(value) == null ||
+                      double.parse(value) <= 0) {
                     return 'Valid price is required';
                   }
                   return null;
                 },
               ),
-             DropdownButtonFormField<String>(
-                value: roomTypes.contains(selectedRoomType) ? selectedRoomType : null, // Ensure value exists in dropdown
-                items: roomTypes.map((type) => DropdownMenuItem(
-                  value: type,
-                  child: Text(type),
-                )).toList(),
+              DropdownButtonFormField<String>(
+                value: roomTypes.contains(selectedRoomType)
+                    ? selectedRoomType
+                    : null, // Ensure value exists in dropdown
+                items: roomTypes
+                    .map((type) => DropdownMenuItem(
+                          value: type,
+                          child: Text(type),
+                        ))
+                    .toList(),
                 onChanged: (value) => setState(() => selectedRoomType = value!),
                 decoration: InputDecoration(labelText: 'Room Type'),
               ),
@@ -153,14 +171,20 @@ class _EditResidentPageState extends State<EditResidentPage> {
               ),
 
               SizedBox(height: 20),
-              Text('Boarding Details', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Boarding Details',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               DropdownButtonFormField<String>(
-                value: boardingOptions.contains(selectedBoardingName) ? selectedBoardingName : null,
-                items: boardingOptions.map((option) => DropdownMenuItem(
-                  value: option,
-                  child: Text(option),
-                )).toList(),
-                onChanged: (value) => setState(() => selectedBoardingName = value!),
+                value: boardingOptions.contains(selectedBoardingName)
+                    ? selectedBoardingName
+                    : null,
+                items: boardingOptions
+                    .map((option) => DropdownMenuItem(
+                          value: option,
+                          child: Text(option),
+                        ))
+                    .toList(),
+                onChanged: (value) =>
+                    setState(() => selectedBoardingName = value!),
                 decoration: InputDecoration(labelText: 'Boarding Name'),
               ),
               TextFormField(
@@ -170,9 +194,12 @@ class _EditResidentPageState extends State<EditResidentPage> {
               ),
 
               SizedBox(height: 20),
-              Text('Booking Dates', style: TextStyle(fontWeight: FontWeight.bold)),
-              _buildDatePicker('Check-in Date', checkInController, (date) => checkInDate = date),
-              _buildDatePicker('Check-out Date', checkOutController, (date) => checkOutDate = date),
+              Text('Booking Dates',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              _buildDatePicker('Check-in Date', checkInController,
+                  (date) => checkInDate = date),
+              _buildDatePicker('Check-out Date', checkOutController,
+                  (date) => checkOutDate = date),
 
               ElevatedButton(
                 onPressed: () {
@@ -189,33 +216,35 @@ class _EditResidentPageState extends State<EditResidentPage> {
       ),
     );
   }
-  Widget _buildDatePicker(String label, TextEditingController controller, Function(DateTime) onDateSelected) {
-  return GestureDetector(
-    onTap: () async {
-      final selectedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2101),
-      );
-      if (selectedDate != null) {
-        onDateSelected(selectedDate);
-        controller.text = "${selectedDate.toLocal()}".split(' ')[0]; // Format date as YYYY-MM-DD
-      }
-    },
-    child: AbsorbPointer(
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(labelText: label),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return '$label is required';
-          }
-          return null;
-        },
-      ),
-    ),
-  );
-}
 
+  Widget _buildDatePicker(String label, TextEditingController controller,
+      Function(DateTime) onDateSelected) {
+    return GestureDetector(
+      onTap: () async {
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2101),
+        );
+        if (selectedDate != null) {
+          onDateSelected(selectedDate);
+          controller.text = "${selectedDate.toLocal()}"
+              .split(' ')[0]; // Format date as YYYY-MM-DD
+        }
+      },
+      child: AbsorbPointer(
+        child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(labelText: label),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return '$label is required';
+            }
+            return null;
+          },
+        ),
+      ),
+    );
+  }
 }
