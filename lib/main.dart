@@ -1,3 +1,10 @@
+
+import 'package:design_patterns_project/Room_list_screen.dart';
+import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
+import 'package:design_patterns_project/resident_list/addResident.dart';
+
+import 'package:design_patterns_project/Database.dart';
+
 import 'package:flutter/material.dart';
 // import 'package:design_patterns_project/Manager/Manager.dart';
 // import 'package:design_patterns_project/Manager/WorkerManager.dart';
