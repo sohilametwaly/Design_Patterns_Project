@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+
+import 'package:design_patterns_project/Room_list_screen.dart';
+import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
+import 'package:design_patterns_project/resident_list/addResident.dart';
+
+import 'package:design_patterns_project/Database.dart';
+
+>>>>>>> e6054a5 (room-list-done)
 import 'package:flutter/material.dart';
 // import 'package:design_patterns_project/Manager/Manager.dart';
 // import 'package:design_patterns_project/Manager/WorkerManager.dart';
@@ -37,8 +47,12 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       //title: 'Firebase Sign Up',
       home: ResidentListPage(receptionist: receptionist),
+=======
+      home: RoomListScreen(),
+>>>>>>> e6054a5 (room-list-done)
     );
   }
 }
