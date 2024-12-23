@@ -12,13 +12,13 @@ class AbstractRoom {
   AbstractRoom(this.roomNumber, this.pricePerNight, this.roomType);
 
   Map<String, dynamic> toMap() {
-  return {
-    'id': roomNumber,
-    'price': pricePerNight,
-    'occupied': occupied,
-    'roomType': roomType,
-  };
-}
+    return {
+      'id': roomNumber,
+      'price': pricePerNight,
+      'occupied': occupied,
+      'roomType': roomType,
+    };
+  }
 
   // String getRoomType() {
   //   return room_type;
