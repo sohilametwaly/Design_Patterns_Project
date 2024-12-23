@@ -17,6 +17,24 @@ class WorkerManager {
   }
 
   Future<Map<String, Map<String, dynamic>>> viewWorkers() async {
-    return _db.readData("workers");
+    final Map<dynamic, dynamic> rawData = await _db.readData("workers");
+    final Map<String, Map<String, dynamic>> workersMap = {};
+    // Convert Map<dynamic, dynamic> to Map<String, Map<String, dynamic>>
+    rawData.forEach((key, value) {
+      if (value is Map<dynamic, dynamic>) {
+        Map<String, dynamic> workerMap = Map<String, dynamic>.from(value);
+
+        if (workerMap.containsKey('salary')) {
+          if (workerMap['salary'] is int) {
+            workerMap['salary'] = (workerMap['salary'] as int).toDouble();
+          }
+        }
+        workersMap[key.toString()] = workerMap;
+      } else {
+        throw TypeError();
+      }
+    });
+    return workersMap;
   }
 }
+

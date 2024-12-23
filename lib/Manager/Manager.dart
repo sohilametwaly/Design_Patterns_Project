@@ -28,9 +28,10 @@ class Manager {
     this.workerManager.deleteWorker(id);
   }
 
+
   // Workers Details
-  void viewWorkers() {
-    this.workerManager.viewWorkers();
+  Future<Map<String, Map<String, dynamic>>> viewWorkers() {
+    return this.workerManager.viewWorkers();
   }
 
   // Room Monitoring
