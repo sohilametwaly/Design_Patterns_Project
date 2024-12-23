@@ -165,7 +165,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
                 );
               },
             )
-                : Center(child: Text('No rooms available for this type or filter')),
+                : Center(child: Text('No rooms available')),
           ),
         ],
       ),
