@@ -11,7 +11,8 @@ import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
 import 'package:design_patterns_project/resident_list/addResident.dart';
 
 import 'package:design_patterns_project/Database.dart';
-import 'package:design_patterns_project/worker-list.dart';
+import 'package:design_patterns_project/view-resident.dart';
+// import 'package:design_patterns_project/worker-list.dart';
 
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: RoomListScreen(manager: m),
-      home: RoomListScreen(manager: m)
+      home: viewResidentListPage(manager: m)
     );
   }
 }
