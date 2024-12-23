@@ -28,7 +28,7 @@ class Incometracker {
       DateTime startDate, DateTime endDate) async {
     Database database = Database.getInstance();
 
-    final snapshot = await database.readData('booking');
+    final snapshot = await database.readData('bookings');
 
     if (snapshot.value != null) {
       return (snapshot.value as Map).entries.map((entry) {
