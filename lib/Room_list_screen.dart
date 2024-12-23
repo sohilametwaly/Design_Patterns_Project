@@ -1,16 +1,19 @@
+import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:flutter/material.dart';
-import 'Database.dart';
+import 'Manager/RoomMonitoring.dart';
 
 class RoomListScreen extends StatefulWidget {
   @override
   _RoomListScreenState createState() => _RoomListScreenState();
+  final Manager manager;
+  RoomListScreen({required this.manager});
 }
 
 class _RoomListScreenState extends State<RoomListScreen> {
   String selectedRoomType = 'single';
   String selectedAvailability = 'All';
 
-  Map<dynamic, dynamic> roomsData = {};
+  dynamic roomsData ;
   List<MapEntry> filteredRooms = [];
 
   @override
@@ -19,24 +22,31 @@ class _RoomListScreenState extends State<RoomListScreen> {
     loadRoomsData();
   }
 
-
   Future<void> loadRoomsData() async {
-    final db = Database.getInstance();
-    final rooms = await db.readData("Rooms");
-
-    setState(() {
-      roomsData = rooms;
-      filterRooms();
-    });
+    Roommonitoring roommonitoring= await widget.manager.roomMonitor;
+    try {
+      final rooms = await roommonitoring.monitorRooms();
+      if (rooms.isNotEmpty) {
+        print("Rooms loaded successfully: $rooms");
+        setState(() {
+          roomsData = rooms;
+          filterRooms();
+        });
+      } else {
+        print("No rooms found");
+      }
+    } catch (e) {
+      print("Errorrrr: $e");
+    }
   }
 
 
+
   void filterRooms() {
+    // print("Filtering rooms based on selected type: $selectedRoomType and availability: $selectedAvailability");
     setState(() {
       filteredRooms = roomsData.entries.where((entry) {
-
         bool matchesRoomType = entry.value['roomType'] == selectedRoomType;
-
 
         bool matchesAvailability = selectedAvailability == 'All' ||
             (selectedAvailability == 'Available' && !entry.value['occupied']) ||
@@ -45,7 +55,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
         return matchesRoomType && matchesAvailability;
       }).toList();
     });
-    print(filteredRooms);
+
+    print("Filtered rooms: $filteredRooms");
   }
 
   @override
@@ -53,11 +64,9 @@ class _RoomListScreenState extends State<RoomListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Room List'),
-
       ),
       body: Column(
         children: [
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton<String>(
@@ -76,8 +85,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
               },
             ),
           ),
-
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton<String>(
@@ -96,8 +103,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
               },
             ),
           ),
-
-
           Expanded(
             child: filteredRooms.isNotEmpty
                 ? ListView.builder(
@@ -108,7 +113,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
                 var roomDetails = room.value;
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 6.0, horizontal: 12.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -127,7 +133,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -143,15 +148,23 @@ class _RoomListScreenState extends State<RoomListScreen> {
                             Row(
                               children: [
                                 Icon(
-                                  roomDetails['occupied'] ? Icons.close : Icons.check_circle,
-                                  color: roomDetails['occupied'] ? Colors.red : Colors.green,
+                                  roomDetails['occupied']
+                                      ? Icons.close
+                                      : Icons.check_circle,
+                                  color: roomDetails['occupied']
+                                      ? Colors.red
+                                      : Colors.green,
                                   size: 20,
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  roomDetails['occupied'] ? "Not Available" : "Available",
+                                  roomDetails['occupied']
+                                      ? "Not Available"
+                                      : "Available",
                                   style: TextStyle(
-                                    color: roomDetails['occupied'] ? Colors.red : Colors.green,
+                                    color: roomDetails['occupied']
+                                        ? Colors.red
+                                        : Colors.green,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -173,7 +186,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
     );
   }
 }
-
 
 extension StringCasingExtension on String {
   String capitalize() {

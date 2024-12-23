@@ -1,4 +1,9 @@
 
+import 'package:design_patterns_project/Manager/IncomeTracker.dart';
+import 'package:design_patterns_project/Manager/Manager.dart';
+import 'package:design_patterns_project/Manager/ResidentViewer.dart';
+import 'package:design_patterns_project/Manager/RoomMonitor.dart';
+import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
 import 'package:design_patterns_project/Room_list_screen.dart';
 import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
 import 'package:design_patterns_project/resident_list/addResident.dart';
@@ -18,7 +23,9 @@ import 'roomAssigner.dart';
 import 'ResidentManagement.dart';
 import 'residentList.dart';
 
-void main() async {
+import 'Manager/WorkerManager.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MainApp());
