@@ -3,8 +3,6 @@ import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/worker.dart';
 import 'package:design_patterns_project/addWorkerPage.dart';
 
-
-
 class WorkerListPage extends StatefulWidget {
   final Manager manager;
 
@@ -229,6 +227,4 @@ class _WorkerListPageState extends State<WorkerListPage> {
       ),
     );
   }
-
-
 }
