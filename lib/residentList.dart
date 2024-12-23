@@ -1,3 +1,5 @@
+import 'package:design_patterns_project/Database.dart';
+import 'package:design_patterns_project/Resident.dart';
 import 'package:flutter/material.dart';
 //import 'Resident.dart';
 import 'Receptionist.dart';
@@ -15,6 +17,7 @@ class ResidentListPage extends StatefulWidget {
 }
 
 class _ResidentListPageState extends State<ResidentListPage> {
+  Database database = Database.getInstance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +30,9 @@ class _ResidentListPageState extends State<ResidentListPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          if (snapshot.hasError ||
+              !snapshot.hasData ||
+              snapshot.data!.isEmpty) {
             return Center(child: Text('No residents found.'));
           }
 
@@ -41,13 +46,15 @@ class _ResidentListPageState extends State<ResidentListPage> {
                 margin: EdgeInsets.all(8),
                 child: ListTile(
                   title: Text('${residentData['name']}'),
-                  subtitle: Text('Room: ${residentData['booking']['room']['id']}'),
+                  subtitle:
+                      Text('Room: ${residentData['booking']['room']['id']}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
                         icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () => _editResident(residentId, residentData),
+                        onPressed: () =>
+                            _editResident(residentId, residentData),
                       ),
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
@@ -82,13 +89,20 @@ class _ResidentListPageState extends State<ResidentListPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditResidentPage(residentId: id, data: data, receptionist: widget.receptionist),
+        builder: (context) => EditResidentPage(
+            residentId: id, data: data, receptionist: widget.receptionist),
       ),
     ).then((_) => setState(() {}));
   }
 
-  void _deleteResident(String id) {
+  void _deleteResident(String id) async {
+    print(id);
+    int roomId = await database.readData('residents/${id}/booking/room').length;
     setState(() {
+      print(roomId);
+
+      Map<String, dynamic> updateData = {'occuiped': false};
+      database.updateData('Rooms/${roomId}', updateData);
       widget.receptionist.deleteResident(id);
     });
   }
@@ -97,7 +111,8 @@ class _ResidentListPageState extends State<ResidentListPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddResidentPage(receptionist: widget.receptionist),
+        builder: (context) =>
+            AddResidentPage(receptionist: widget.receptionist),
       ),
     ).then((_) => setState(() {}));
   }
