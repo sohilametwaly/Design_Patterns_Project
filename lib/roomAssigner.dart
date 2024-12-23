@@ -69,9 +69,9 @@ class RoomAssigner {
 
       // Check for available room matching the desired type
       if (room['occupied'] == false && room['roomType'] == desiredRoomType.toLowerCase()) {
-          final double pricePerNight = (room['pricePerNight'] is int)
-          ? (room['pricePerNight'] as int).toDouble()
-          : double.parse(room['pricePerNight'].toString());
+          // final double pricePerNight = (room['pricePerNight'] is int)
+          // ? (room['pricePerNight'] as int).toDouble()
+          // : double.parse(room['pricePerNight'].toString());
         // Mark room as occupied
         room['occupied'] = true;
 
@@ -90,7 +90,7 @@ class RoomAssigner {
         return {
           'roomId': roomIdKey,
           'roomType': room['roomType'].toString(),
-          'pricePerNight': pricePerNight.toString(),
+          // 'pricePerNight': pricePerNight.toString(),
         };
       }
     }
