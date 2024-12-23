@@ -1,6 +1,8 @@
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:flutter/material.dart';
 import 'Manager/RoomMonitoring.dart';
+import 'package:flutter/material.dart';
+import 'Database.dart';
 
 class RoomListScreen extends StatefulWidget {
   @override
@@ -54,8 +56,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
         return matchesRoomType && matchesAvailability;
       }).toList();
     });
-
-    print("Filtered rooms: $filteredRooms");
+    print(filteredRooms);
   }
 
   @override
