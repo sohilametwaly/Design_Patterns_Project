@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
+=======
+>>>>>>> 0e12237 (login and signup pages)
 import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/Manager/ResidentViewer.dart';
 import 'package:design_patterns_project/Manager/RoomMonitor.dart';
+<<<<<<< HEAD
 import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
 import 'package:design_patterns_project/Room_list_screen.dart';
 import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
@@ -27,6 +31,10 @@ import 'roomAssigner.dart';
 import 'ResidentManagement.dart';
 import 'residentList.dart';
 =======
+=======
+import 'package:design_patterns_project/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+>>>>>>> 0e12237 (login and signup pages)
 import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
 >>>>>>> 5c80577 (some edits)
@@ -36,8 +44,12 @@ void main() async {
 =======
 import 'Manager/WorkerManager.dart';
 
+<<<<<<< HEAD
 void main() {
 >>>>>>> c74ce9a (room list after updates)
+=======
+Future<void> main() async {
+>>>>>>> 0e12237 (login and signup pages)
   WidgetsFlutterBinding.ensureInitialized();
 <<<<<<< HEAD
   await Firebase.initializeApp();
@@ -52,6 +64,7 @@ class MainApp extends StatelessWidget {
   runApp(MainApp());
 }
 
+<<<<<<< HEAD
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
@@ -89,10 +102,25 @@ class MyApp extends StatelessWidget {
      Roommonitor roommonitor=Roommonitor();
      Residentviewer residentViewer = Residentviewer();
     Manager m = Manager(workerManager: workerManager, incomeTracker: incometracker, roomMonitor:roommonitor, residentViewer: residentViewer);
+=======
+class MainApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    WorkerManager workerManager = WorkerManager();
+    Incometracker incometracker = Incometracker();
+    Roommonitor roommonitor = Roommonitor();
+    Residentviewer residentViewer = Residentviewer();
+    Manager m = Manager(
+        workerManager: workerManager,
+        incomeTracker: incometracker,
+        roomMonitor: roommonitor,
+        residentViewer: residentViewer);
+>>>>>>> 0e12237 (login and signup pages)
     // final Roommonitoring roomMonitor;
     // final Residentviewer residentViewer;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home: RoomListScreen(manager: m),
 >>>>>>> c74ce9a (room list after updates)
     );
@@ -185,6 +213,10 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+=======
+      title: 'Firebase Sign Up',
+      home: LoginPage(),
+>>>>>>> 0e12237 (login and signup pages)
     );
   }
 }
