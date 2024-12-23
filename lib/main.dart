@@ -1,15 +1,3 @@
-import 'package:design_patterns_project/Manager/IncomeTracker.dart';
-import 'package:design_patterns_project/Manager/Manager.dart';
-import 'package:design_patterns_project/Manager/ResidentViewer.dart';
-import 'package:design_patterns_project/Manager/RoomMonitor.dart';
-import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
-import 'package:design_patterns_project/Room_list_screen.dart';
-import 'package:design_patterns_project/resident_list/ResidentListScreen.dart';
-import 'package:design_patterns_project/resident_list/addResident.dart';
-
-import 'package:design_patterns_project/Database.dart';
-import 'package:design_patterns_project/signup/signuppage.dart';
-
 import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
 
@@ -25,21 +13,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WorkerManager workerManager = WorkerManager();
-    Incometracker incometracker = Incometracker();
-    Roommonitor roommonitor = Roommonitor();
-    Residentviewer residentViewer = Residentviewer();
-    Manager m = Manager(
-        workerManager: workerManager,
-        incomeTracker: incometracker,
-        roomMonitor: roommonitor,
-        residentViewer: residentViewer);
-    // final Roommonitoring roomMonitor;
-    // final Residentviewer residentViewer;
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
+    // WorkerManager workerManager = WorkerManager();
+    // Incometracker incometracker = Incometracker();
+    // Roommonitor roommonitor = Roommonitor();
+    // Residentviewer residentviewer = Residentviewer();
+    // Manager manager = Manager(
+    //   workerManager: workerManager,
+    //   incomeTracker: incometracker,
+    //   roomMonitor: roommonitor,
+    //   residentViewer: residentviewer
+    //   );
+    ResidentManagement residentManagement = ResidentManagement();
+    RoomAssigner roomAssigner = RoomAssigner();
+    Receptionist receptionist = Receptionist(residentManagement, roomAssigner);
 
-        //title: 'Firebase Sign Up',
-        home: SignUpPage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      //title: 'Firebase Sign Up',
+      home: ResidentListPage(receptionist: receptionist),
+    );
   }
 }
