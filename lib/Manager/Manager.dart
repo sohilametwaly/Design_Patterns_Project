@@ -28,12 +28,10 @@ class Manager {
     this.workerManager.deleteWorker(id);
   }
 
-
   // Workers Details
   Future<Map<String, Map<String, dynamic>>> viewWorkers() {
     return this.workerManager.viewWorkers();
   }
-
 
   // Room Monitoring
   void monitorRooms() {
@@ -42,14 +40,14 @@ class Manager {
 
   // Income Tracking
   void getWeeklyReport() {
-    this.incomeTracker.generateWeeklyReport();
+    this.incomeTracker.getWeeklyReport();
   }
 
   void getMonthlyReport() {
-    this.incomeTracker.generateMonthlyReport();
+    this.incomeTracker.getMonthlyReport();
   }
 
   void getAnnualReport() {
-    this.incomeTracker.generateAnnualReport();
+    this.incomeTracker.getAnnualReport();
   }
 }
