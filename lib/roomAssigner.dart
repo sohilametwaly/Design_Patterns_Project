@@ -47,10 +47,8 @@ class RoomAssigner {
 //   return false;
 // }
 
-
-
-
-  Future<Map<String, dynamic>?> assignRoom(Resident resident, String desiredRoomType) async {
+  Future<Map<String, dynamic>?> assignRoom(
+      Resident resident, String desiredRoomType) async {
     // Fetch all rooms from Firebase
     final Map<dynamic, dynamic>? roomsData = await _db.readData('Rooms');
 
@@ -65,13 +63,14 @@ class RoomAssigner {
       final String roomIdKey = entry.key.toString();
 
       // Room data as a map
-     final Map<String, dynamic> room = Map<String, dynamic>.from(entry.value);
+      final Map<String, dynamic> room = Map<String, dynamic>.from(entry.value);
 
       // Check for available room matching the desired type
-      if (room['occupied'] == false && room['roomType'] == desiredRoomType.toLowerCase()) {
-          final double pricePerNight = (room['pricePerNight'] is int)
-          ? (room['pricePerNight'] as int).toDouble()
-          : double.parse(room['pricePerNight'].toString());
+      if (room['occupied'] == false &&
+          room['roomType'] == desiredRoomType.toLowerCase()) {
+        final double pricePerNight = (room['pricePerNight'] is int)
+            ? (room['pricePerNight'] as int).toDouble()
+            : double.parse(room['pricePerNight'].toString());
         // Mark room as occupied
         room['occupied'] = true;
 
@@ -86,7 +85,7 @@ class RoomAssigner {
         // Optionally update resident's data in Firebase
         // await _db.writeData('Residents/${resident.id}', resident.toMap());
 
-        print("Assigned room $roomIdKey to resident ${resident.name}");
+        print("Assigned room $roomIdKey to resident ${resident._name}");
         return {
           'roomId': roomIdKey,
           'roomType': room['roomType'].toString(),
@@ -100,7 +99,3 @@ class RoomAssigner {
     return null;
   }
 }
-
-
-
-
