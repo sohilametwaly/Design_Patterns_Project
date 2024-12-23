@@ -1,39 +1,28 @@
-import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoardingOption.dart';
+import 'package:design_patterns_project/Abstract Boarding Option/AbstractBoardingOption.dart';
 import 'package:design_patterns_project/abstract_room.dart';
 
 class Booking {
-  int id;
-  int DurationOfStay;
+  //int id;
+  //int DurationOfStay;
+  DateTime checkInDate;
+  DateTime checkOutDate;
   AbstractRoom room;
   AbstractBoardingOption boardingOption;
 
-  Booking(this.id, this.DurationOfStay, this.room, this.boardingOption);
+  Booking( this.checkInDate, this.checkOutDate, this.room, this.boardingOption);
 
-  // int get id => _id;
+  Map<String, dynamic> toMap() {
+  return {
+    'checkInDate': checkInDate.toIso8601String(),
+    'checkOutDate': checkOutDate.toIso8601String(),
+    'room': room.toMap(),
+    'boarding': boardingOption.toMap(),
+    
+  };
+}
 
-  // set id(int newId) {
-  //   _id = newId;
+
+  // void displayDetails() {
+  //   print('$DurationOfStay $boardingOption $room $id');
   // }
-
-  // int get DurationOfStay => _DurationOfStay;
-
-  // set DurationOfStay(int newDuration) {
-  //   _DurationOfStay = newDuration;
-  // }
-
-  // AbstractRoom get room => _room;
-
-  // set room(AbstractRoom newRoom) {
-  //   _room = newRoom;
-  // }
-
-  // AbstractBoardingOption get boardingOption => _boardingOption;
-
-  // set boardingOption(AbstractBoardingOption newBoardingOption) {
-  //   _boardingOption = newBoardingOption;
-  // }
-
-  void displayDetails() {
-    print('$DurationOfStay $boardingOption $room $id');
-  }
 }

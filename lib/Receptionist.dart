@@ -1,19 +1,39 @@
-import 'package:design_patterns_project/abstract_room.dart';
-import 'package:design_patterns_project/user.dart';
+//import 'package:design_patterns_project/abstract_room.dart';
+//import 'package:design_patterns_project/user.dart';
 import 'Resident.dart';
 import 'ResidentManagement.dart';
 import 'package:design_patterns_project/roomAssigner.dart';
 
-class Receptionist extends User {
+class Receptionist  {
   final ResidentManagement residentManagement;
   //final Map<Resident, AbstractRoom> _listOfAssignedRooms = {};
  // final Resident resident=Resident();
- final RoomAssigner roomAssigner;
-  Receptionist(super.username, super.password, super.role, this.residentManagement, this.roomAssigner);
+  final RoomAssigner roomAssigner;
+  Receptionist(
+    // super.username, super.password, super.role,
+   this.residentManagement, this.roomAssigner);
 
-  void addResident(Resident resident, String desiredRoomType) {
+//   void addResident(Resident resident, String desiredRoomType) async {
+//   final roomDetails = await roomAssigner.assignRoom(resident, desiredRoomType);
+
+//   if (roomDetails != null) {
+//     this.residentManagement.addResident(resident);
+//     //print("Resident ${resident.name} assigned to room ${roomDetails['roomId']} and added successfully.");
+//   } else {
+//     print("Failed to assign room for resident ${resident.name}. No matching room available.");
+//   }
+// }
+
+  Future<Map<String, dynamic>?> assignRoom(Resident resident, String desiredRoomType){
+    return this.roomAssigner.assignRoom(resident, desiredRoomType);
+  }
+  
+  void addResident(Resident resident) {
+    //roomAssigner.assignRoom(resident, desiredRoomType);
     this.residentManagement.addResident(resident);
-    roomAssigner.assignRoom(resident, desiredRoomType);
+    
+    //print("added in receptionist");
+    
   }
 
   void editResident(String id, Resident newResident) {

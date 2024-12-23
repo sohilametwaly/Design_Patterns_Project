@@ -2,7 +2,7 @@ import 'package:design_patterns_project/calc-cost/Booking.dart';
 
 
 class Resident {
-  int id;
+  String id;
   String name;
   String email;
   String phone;
@@ -17,7 +17,7 @@ class Resident {
       'name': name,
       'email': email,
       'phone': phone,
-      'booking': booking
+      'booking': booking.toMap()
     };
   } 
   // Booking? get booking => _booking;
@@ -33,7 +33,6 @@ class Resident {
   //   _id = id;
   // }
 
-  String? getId() => _id;
 
   // String? getName() => _name;
 

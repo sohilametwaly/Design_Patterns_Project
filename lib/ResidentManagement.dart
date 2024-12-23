@@ -6,6 +6,7 @@ class ResidentManagement {
 
   void addResident(Resident resident) async {
     await _db.writeData('residents/${resident.id}', resident.toMap());
+    print("added in resident management");
   }
 
   void editResident(String id, Resident newResident) async {

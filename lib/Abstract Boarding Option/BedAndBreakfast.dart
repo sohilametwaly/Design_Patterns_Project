@@ -2,7 +2,7 @@ import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoa
 
 class BedAndBreakfast extends AbstractBoardingOption{
 
-    BedAndBreakfast():super("bed and breakfast ",80.0);
+    BedAndBreakfast():super("bed and breakfast ",150.0);
 
   String getMealPlan(){
      return "bed and breakfast includes breakfast only ";

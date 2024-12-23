@@ -4,12 +4,21 @@ import 'package:firebase_database/firebase_database.dart';
 import 'firebase_options.dart';
 
 class AbstractRoom {
-  int roomNumber;
+  String roomNumber;
   double pricePerNight;
   bool occupied = false;
   String roomType;
 
   AbstractRoom(this.roomNumber, this.pricePerNight, this.roomType);
+
+  Map<String, dynamic> toMap() {
+  return {
+    'id': roomNumber,
+    'price': pricePerNight,
+    'occupied': occupied,
+    'roomType': roomType,
+  };
+}
 
   // String getRoomType() {
   //   return room_type;
