@@ -1,13 +1,17 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 =======
 >>>>>>> 0e12237 (login and signup pages)
+=======
+>>>>>>> fb495182374fb16bb93eeaf3d79a3e527abcf9c7
 import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/Manager/ResidentViewer.dart';
 import 'package:design_patterns_project/Manager/RoomMonitor.dart';
+<<<<<<< HEAD
 <<<<<<< HEAD
 import 'package:design_patterns_project/Manager/RoomMonitoring.dart';
 import 'package:design_patterns_project/Room_list_screen.dart';
@@ -32,6 +36,8 @@ import 'ResidentManagement.dart';
 import 'residentList.dart';
 =======
 =======
+=======
+>>>>>>> fb495182374fb16bb93eeaf3d79a3e527abcf9c7
 import 'package:design_patterns_project/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 >>>>>>> 0e12237 (login and signup pages)
@@ -39,6 +45,7 @@ import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
 >>>>>>> 5c80577 (some edits)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 void main() async {
 =======
@@ -50,6 +57,11 @@ void main() {
 =======
 Future<void> main() async {
 >>>>>>> 0e12237 (login and signup pages)
+=======
+import 'Manager/WorkerManager.dart';
+
+Future<void> main() async {
+>>>>>>> fb495182374fb16bb93eeaf3d79a3e527abcf9c7
   WidgetsFlutterBinding.ensureInitialized();
 <<<<<<< HEAD
   await Firebase.initializeApp();
@@ -115,7 +127,10 @@ class MainApp extends StatelessWidget {
         incomeTracker: incometracker,
         roomMonitor: roommonitor,
         residentViewer: residentViewer);
+<<<<<<< HEAD
 >>>>>>> 0e12237 (login and signup pages)
+=======
+>>>>>>> fb495182374fb16bb93eeaf3d79a3e527abcf9c7
     // final Roommonitoring roomMonitor;
     // final Residentviewer residentViewer;
     return MaterialApp(
