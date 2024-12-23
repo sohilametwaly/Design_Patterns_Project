@@ -6,8 +6,8 @@ class ResidentDetailsPage extends StatelessWidget {
 
   ResidentDetailsPage({required this.residentId, required this.data});
 
-   @override
-   Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Worker Details')),
       body: Padding(
