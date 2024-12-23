@@ -13,7 +13,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
   String selectedRoomType = 'single';
   String selectedAvailability = 'All';
 
-  dynamic roomsData ;
+  Map<dynamic, dynamic> roomsData = {};
   List<MapEntry> filteredRooms = [];
 
   @override
@@ -23,7 +23,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
   }
 
   Future<void> loadRoomsData() async {
-    Roommonitoring roommonitoring= await widget.manager.roomMonitor;
+    Roommonitoring roommonitoring = await widget.manager.roomMonitor;
     try {
       final rooms = await roommonitoring.monitorRooms();
       if (rooms.isNotEmpty) {
@@ -40,8 +40,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
     }
   }
 
-
-
   void filterRooms() {
     // print("Filtering rooms based on selected type: $selectedRoomType and availability: $selectedAvailability");
     setState(() {
@@ -50,7 +48,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
 
         bool matchesAvailability = selectedAvailability == 'All' ||
             (selectedAvailability == 'Available' && !entry.value['occupied']) ||
-            (selectedAvailability == 'Non-Available' && entry.value['occupied']);
+            (selectedAvailability == 'Non-Available' &&
+                entry.value['occupied']);
 
         return matchesRoomType && matchesAvailability;
       }).toList();
@@ -74,7 +73,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
               items: ['single', 'double', 'triple'].map((String type) {
                 return DropdownMenuItem<String>(
                   value: type,
-                  child: Text(type.capitalize(), style: TextStyle(fontSize: 16)),
+                  child:
+                      Text(type.capitalize(), style: TextStyle(fontSize: 16)),
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -106,78 +106,78 @@ class _RoomListScreenState extends State<RoomListScreen> {
           Expanded(
             child: filteredRooms.isNotEmpty
                 ? ListView.builder(
-              itemCount: filteredRooms.length,
-              itemBuilder: (context, index) {
-                var room = filteredRooms[index];
-                var roomNumber = room.key;
-                var roomDetails = room.value;
+                    itemCount: filteredRooms.length,
+                    itemBuilder: (context, index) {
+                      var room = filteredRooms[index];
+                      var roomNumber = room.key;
+                      var roomDetails = room.value;
 
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6.0, horizontal: 12.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey[300]!),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Room $roomNumber',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6.0, horizontal: 12.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey[300]!),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
                               ),
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Icon(
-                                  roomDetails['occupied']
-                                      ? Icons.close
-                                      : Icons.check_circle,
-                                  color: roomDetails['occupied']
-                                      ? Colors.red
-                                      : Colors.green,
-                                  size: 20,
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  roomDetails['occupied']
-                                      ? "Not Available"
-                                      : "Available",
-                                  style: TextStyle(
-                                    color: roomDetails['occupied']
-                                        ? Colors.red
-                                        : Colors.green,
-                                    fontWeight: FontWeight.bold,
+                            ],
+                          ),
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Room $roomNumber',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        roomDetails['occupied']
+                                            ? Icons.close
+                                            : Icons.check_circle,
+                                        color: roomDetails['occupied']
+                                            ? Colors.red
+                                            : Colors.green,
+                                        size: 20,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        roomDetails['occupied']
+                                            ? "Not Available"
+                                            : "Available",
+                                        style: TextStyle(
+                                          color: roomDetails['occupied']
+                                              ? Colors.red
+                                              : Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            )
+                      );
+                    },
+                  )
                 : Center(child: Text('No rooms available')),
           ),
         ],
