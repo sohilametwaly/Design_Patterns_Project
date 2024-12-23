@@ -13,7 +13,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
   String selectedRoomType = 'single';
   String selectedAvailability = 'All';
 
-  Map<dynamic, dynamic> roomsData = {};
+  dynamic roomsData;
   List<MapEntry> filteredRooms = [];
 
   @override

@@ -43,6 +43,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WorkerManager workerManager = WorkerManager();
+    Incometracker incometracker = Incometracker();
+    Roommonitor roommonitor = Roommonitor();
+    Residentviewer residentViewer = Residentviewer();
+    Manager m = Manager(
+        workerManager: workerManager,
+        incomeTracker: incometracker,
+        roomMonitor: roommonitor,
+        residentViewer: residentViewer);
+    // final Roommonitoring roomMonitor;
+    // final Residentviewer residentViewer;
     return MaterialApp(
         debugShowCheckedModeBanner: false,
 
