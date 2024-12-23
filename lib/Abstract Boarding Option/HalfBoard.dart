@@ -2,7 +2,7 @@ import 'package:design_patterns_project/Abstract%20Boarding%20Option/AbstractBoa
 
 class HalfBoard extends AbstractBoardingOption{
 
-    HalfBoard():super("Half board",300.0);
+    HalfBoard():super("Half board");
 
   String getMealPlan(){
      return "Half board includes breakfast and dinner.";

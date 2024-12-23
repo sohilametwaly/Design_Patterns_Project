@@ -6,6 +6,9 @@ class ResidentManagement {
 
   void addResident(Resident resident) async {
     await _db.writeData('residents/${resident.id}', resident.toMap());
+    final String id =  DateTime.now().millisecondsSinceEpoch.toString();
+    
+    await _db.writeData('bookings/$id',resident.booking.toMap()); 
     print("added in resident management");
   }
 

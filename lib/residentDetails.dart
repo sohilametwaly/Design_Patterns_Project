@@ -27,6 +27,8 @@ class ResidentDetailsPage extends StatelessWidget {
             Text('Boarding Type: ${data['booking']['boarding']['name']}', style: TextStyle(fontSize: 18)),
             Text('Room Type: ${data['booking']['room']['roomType']}', style: TextStyle(fontSize: 18)),
             Text('Room Number: ${data['booking']['room']['id']}', style: TextStyle(fontSize: 18)),
+            Text('Total Price: ${data['booking']['Total']}', style: TextStyle(fontSize: 18)),
+            
             SizedBox(height: 10),
             Text('Email: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Text(' ${data['email']}', style: TextStyle(fontSize: 20)),

@@ -1,5 +1,8 @@
-import 'package:design_patterns_project/Database.dart';
+import 'package:design_patterns_project/CostCalculationFactory.dart';
 import 'package:design_patterns_project/Receptionist.dart';
+import 'package:design_patterns_project/RoomStrategy.dart';
+import 'package:design_patterns_project/RoomStrategyFactory.dart';
+import 'package:design_patterns_project/calc-cost/CostCalculationStrategy.dart';
 import 'package:flutter/material.dart';
 import 'Resident.dart';
 import 'calc-cost/Booking.dart';
@@ -170,6 +173,12 @@ class _AddResidentPageState extends State<AddResidentPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        CostCalculationStrategy costBoarding =
+                            CostCalculationFactory.CreateBoardingOption(
+                                boardingOptionController.text);
+                        Roomstrategy costRoom =
+                            RoomStrategyFactory.CreateBoardingOption(
+                                roomTypeController.text);
                         final resident = Resident(
                             DateTime.now().millisecondsSinceEpoch.toString(),
                             nameController.text,
@@ -178,14 +187,15 @@ class _AddResidentPageState extends State<AddResidentPage> {
                             Booking(
                               checkInDate!,
                               checkOutDate!,
-                              AbstractRoom('', 0, roomTypeController.text),
+                              AbstractRoom('', roomTypeController.text),
                               Boardingoptionfactory.CreateBoardingOption(
                                   boardingOptionController.text),
+                              costBoarding,
+                              costRoom,
                             ));
                         widget.receptionist
                             .assignRoom(resident, roomTypeController.text)
                             .then((roomDetails) {
-                          Database database = Database.getInstance();
                           print(
                               "Resident added successfully with room details: $roomDetails");
                           if (roomDetails != null) {
@@ -193,12 +203,9 @@ class _AddResidentPageState extends State<AddResidentPage> {
                             resident.booking.room.occupied = true;
                             resident.booking.room.roomNumber =
                                 roomDetails['roomId'].toString();
-                            resident.booking.room.pricePerNight =
-                                double.parse(roomDetails['pricePerNight']);
+                            // resident.booking.room.pricePerNight = double.parse(roomDetails['pricePerNight']);
                             resident.booking.room.roomType =
                                 roomDetails['roomType'];
-                            database.writeData(
-                                'bookings', resident.booking.toMap());
 
                             // Add the resident to resident management
                             widget.receptionist.addResident(resident);
