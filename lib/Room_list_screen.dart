@@ -8,7 +8,6 @@ class RoomListScreen extends StatefulWidget {
   final Manager manager;
   RoomListScreen({required this.manager});
 }
-
 class _RoomListScreenState extends State<RoomListScreen> {
   String selectedRoomType = 'single';
   String selectedAvailability = 'All';
@@ -39,8 +38,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
       print("Errorrrr: $e");
     }
   }
-
-
 
   void filterRooms() {
     // print("Filtering rooms based on selected type: $selectedRoomType and availability: $selectedAvailability");
