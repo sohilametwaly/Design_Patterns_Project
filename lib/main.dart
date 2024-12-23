@@ -1,3 +1,4 @@
+import 'package:design_patterns_project/signup/signuppage.dart';
 import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
 
@@ -23,14 +24,11 @@ class MyApp extends StatelessWidget {
     //   roomMonitor: roommonitor,
     //   residentViewer: residentviewer
     //   );
-    ResidentManagement residentManagement = ResidentManagement();
-    RoomAssigner roomAssigner = RoomAssigner();
-    Receptionist receptionist = Receptionist(residentManagement, roomAssigner);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //title: 'Firebase Sign Up',
-      home: ResidentListPage(receptionist: receptionist),
+      home: LoginPage(),
     );
   }
 }
