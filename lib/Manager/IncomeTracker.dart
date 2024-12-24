@@ -7,17 +7,17 @@ class Incometracker {
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
     final endOfWeek = startOfWeek.add(Duration(days: 6));
-    await generateIncomeReport("Weekly", startOfWeek, endOfWeek);
+   await generateIncomeReport("Weekly", startOfWeek, endOfWeek);
   }
 
-  void getMonthlyReport() async {
+    void  getMonthlyReport() async {
     final now = DateTime.now();
     final startOfMonth = DateTime(now.year, now.month, 1);
     final endOfMonth = DateTime(now.year, now.month + 1, 0);
-    await generateIncomeReport("Monthly", startOfMonth, endOfMonth);
+   await generateIncomeReport("Monthly", startOfMonth, endOfMonth);
   }
 
-  void getAnnualReport() async {
+     void  getAnnualReport() async {
     final now = DateTime.now();
     final startOfYear = DateTime(now.year, 1, 1);
     final endOfYear = DateTime(now.year, 12, 31);
@@ -59,49 +59,71 @@ class Incometracker {
     }
   }
 
-  Future<void> generateIncomeReport(
-      String reportType, DateTime startDate, DateTime endDate) async {
-    try {
-      final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
-      final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
+//   Future<double> generateIncomeReport(
+//       String reportType, DateTime startDate, DateTime endDate) async {
+//     try {
+//       final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
+//       final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
 
-      // Fetch data within the date range
-      final residents = await fetchResidentsByDateRange(startDate, endDate);
-      double totalIncome = 0;
-      print(residents.length);
+//       // Fetch data within the date range
+//       final residents = await fetchResidentsByDateRange(startDate, endDate);
+//       double totalIncome = 0;
+//       print(residents.length);
 
-      for (var resident in residents) {
-        // Parse timestamps
-        final checkInTimestamp = resident["checkInDate"] ?? 0;
-        final checkOutTimestamp = resident["checkOutDate"] ?? 0;
-        final totalCost = resident["total"] ?? 0;
-        print('total cost $totalCost');
+//       for (var resident in residents) {
+//         // Parse timestamps
+//         final checkInTimestamp = resident["checkInDate"] ?? 0;
+//         final checkOutTimestamp = resident["checkOutDate"] ?? 0;
+//         final totalCost = resident["total"] ?? 0;
+//         print('total cost $totalCost');
 
-        totalIncome += totalCost;
+//         return totalIncome += totalCost;
 
-        // Validate timestamps
-        // final stayStart = DateTime.fromMillisecondsSinceEpoch(
-        //         (checkInTimestamp > startTimestamp
-        //                 ? checkInTimestamp
-        //                 : startTimestamp) *
-        //             1000)
-        //     .toUtc();
-        // final stayEnd = DateTime.fromMillisecondsSinceEpoch(
-        //         (checkOutTimestamp < endTimestamp
-        //                 ? checkOutTimestamp
-        //                 : endTimestamp) *
-        //             1000)
-        //     .toUtc();
+//         // Validate timestamps
+//         // final stayStart = DateTime.fromMillisecondsSinceEpoch(
+//         //         (checkInTimestamp > startTimestamp
+//         //                 ? checkInTimestamp
+//         //                 : startTimestamp) *
+//         //             1000)
+//         //     .toUtc();
+//         // final stayEnd = DateTime.fromMillisecondsSinceEpoch(
+//         //         (checkOutTimestamp < endTimestamp
+//         //                 ? checkOutTimestamp
+//         //                 : endTimestamp) *
+//         //             1000)
+//         //     .toUtc();
 
-        // if (!stayEnd.isBefore(stayStart)) {
-        //   totalIncome += totalCost;
-        // }
-      }
+//         // if (!stayEnd.isBefore(stayStart)) {
+//         //   totalIncome += totalCost;
+//         // }
+//       }
 
-      print(
-          "$reportType income report generated successfully: Total Income = $totalIncome");
-    } catch (e) {
-      print("Error generating $reportType income report: $e");
+//       print(
+//           "$reportType income report generated successfully: Total Income = $totalIncome");
+//     } catch (e) {
+//       print("Error generating $reportType income report: $e");
+//       return 0.0;
+//     }
+//   }
+
+Future<void> generateIncomeReport(
+    String reportType, DateTime startDate, DateTime endDate) async {
+  try {
+    final residents = await fetchResidentsByDateRange(startDate, endDate);
+    double totalIncome = 0;
+
+    for (var resident in residents) {
+      // Parse the total cost
+      final totalCost = resident["total"] ?? 0;
+      totalIncome += totalCost; // Accumulate total income
     }
-  }
+
+    print(
+        "$reportType income report generated successfully: Total Income = $totalIncome");
+    // Return the total income after processing all residents
+  } catch (e) {
+    print("Error generating $reportType income report: $e");
+    // Return a default value in case of an error
+ }
 }
+ }

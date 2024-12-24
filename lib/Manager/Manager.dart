@@ -39,15 +39,14 @@ class Manager {
   }
 
   // Income Tracking
-  void getWeeklyReport() {
-    this.incomeTracker.getWeeklyReport();
+ void getWeeklyReport() {
+  this.incomeTracker.getWeeklyReport();
   }
-
-  void getMonthlyReport() {
+void getMonthlyReport() {
     this.incomeTracker.getMonthlyReport();
   }
 
-  void getAnnualReport() {
-    this.incomeTracker.getAnnualReport();
+ void getAnnualReport() {
+   this.incomeTracker.getAnnualReport();
   }
 }
