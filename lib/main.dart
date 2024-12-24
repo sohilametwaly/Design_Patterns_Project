@@ -12,6 +12,7 @@ import 'package:design_patterns_project/resident_list/addResident.dart';
 
 import 'package:design_patterns_project/Database.dart';
 import 'package:design_patterns_project/view-resident.dart';
+import 'package:design_patterns_project/workerList.dart';
 // import 'package:design_patterns_project/worker-list.dart';
 
 import 'package:flutter/material.dart';
@@ -48,9 +49,15 @@ class MainApp extends StatelessWidget {
     //   roomMonitor: roommonitor,
     //   residentViewer: residentviewer
     //   );
-    ResidentManagement residentManagement = ResidentManagement();
-    RoomAssigner roomAssigner = RoomAssigner();
+     ResidentManagement residentManagement = ResidentManagement();
+     RoomAssigner roomAssigner = RoomAssigner();
     Receptionist receptionist = Receptionist(residentManagement, roomAssigner);
+    WorkerManager workerManager= WorkerManager();
+     Incometracker incometracker= Incometracker();
+     Roommonitor roommonitor=Roommonitor();
+     Residentviewer residentViewer = Residentviewer();
+    
+    Manager m = Manager(workerManager: workerManager, incomeTracker: incometracker, roomMonitor:roommonitor, residentViewer: residentViewer);
 
 
     return MaterialApp(

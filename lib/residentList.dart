@@ -19,62 +19,128 @@ class ResidentListPage extends StatefulWidget {
 class _ResidentListPageState extends State<ResidentListPage> {
   Database database = Database.getInstance();
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Resident List'),
+ Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        'Residents',
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      body: FutureBuilder<Map<String, Map<String, dynamic>>>(
-        future: widget.receptionist.viewResidents(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError ||
-              !snapshot.hasData ||
-              snapshot.data!.isEmpty) {
-            return Center(child: Text('No residents found.'));
-          }
-
-          final residents = snapshot.data!;
-
-          return ListView(
-            children: residents.entries.map((entry) {
-              final residentId = entry.key;
-              final residentData = entry.value;
-              return Card(
-                margin: EdgeInsets.all(8),
-                child: ListTile(
-                  title: Text('${residentData['name']}'),
-                  subtitle:
-                      Text('Room: ${residentData['booking']['room']['id']}'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () =>
-                            _editResident(residentId, residentData),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => _deleteResident(residentId),
-                      ),
-                    ],
-                  ),
-                  onTap: () => _viewResidentDetails(residentId, residentData),
-                ),
-              );
-            }).toList(),
+      elevation: 0,
+      centerTitle: true,
+    ),
+    body: FutureBuilder<Map<String, Map<String, dynamic>>>(
+      future: widget.receptionist.viewResidents(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            ),
           );
-        },
+        }
+
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Text(
+              'No residents found.',
+              style: TextStyle(fontSize: 16, color: Colors.redAccent),
+            ),
+          );
+        }
+
+        final residents = snapshot.data!;
+
+        return ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemCount: residents.length,
+          itemBuilder: (context, index) {
+            final residentId = residents.keys.elementAt(index);
+            final residentData = residents[residentId]!;
+            return GestureDetector(
+              onTap: () => _viewResidentDetails(residentId, residentData),
+              child: _buildResidentCard(residentId, residentData),
+            );
+          },
+        );
+      },
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: _addResident,
+      backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
+      child: Icon(Icons.add, size: 28, color: Colors.white),
+      tooltip: 'Add Resident',
+    ),
+  );
+}
+
+Widget _buildResidentCard(String residentId, Map<String, dynamic> residentData) {
+  return Card(
+    margin: EdgeInsets.symmetric(vertical: 10),
+    elevation: 10,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: ListTile(
+      contentPadding: EdgeInsets.all(16),
+      leading: CircleAvatar(
+        radius: 30,
+        backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
+        child: Text(
+          residentData['name'][0].toUpperCase(),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _addResident,
+      title: Text(
+        residentData['name'],
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+        ),
       ),
-    );
-  }
+      subtitle: Text(
+        'Room: ${residentData['booking']['room']['id']}',
+        style: TextStyle(color: Colors.grey[700], fontSize: 16),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Material(
+            shape: CircleBorder(),
+            color: Colors.blueAccent.withOpacity(0.1),
+            child: IconButton(
+              icon: Icon(Icons.edit, color: Colors.blueAccent, size: 30),
+              onPressed: () => _editResident(residentId, residentData),
+              tooltip: 'Edit Resident',
+              padding: EdgeInsets.all(8),
+              splashRadius: 28,
+              splashColor: Colors.blueAccent.withOpacity(0.3),
+            ),
+          ),
+          SizedBox(width: 10),
+          Material(
+            shape: CircleBorder(),
+            color: Colors.redAccent.withOpacity(0.1),
+            child: IconButton(
+              icon: Icon(Icons.delete, color: Colors.redAccent, size: 30),
+              onPressed: () => _deleteResident(residentId),
+              tooltip: 'Delete Resident',
+              padding: EdgeInsets.all(8),
+              splashRadius: 28,
+              splashColor: Colors.redAccent.withOpacity(0.3),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 
   void _viewResidentDetails(String id, Map<String, dynamic> data) {
     Navigator.push(
