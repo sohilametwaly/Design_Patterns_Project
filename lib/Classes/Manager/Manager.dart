@@ -50,4 +50,8 @@ class Manager {
   Future<Map<String, dynamic>> getAnnualReport() {
     return this.incomeTracker.getAnnualReport();
   }
+
+  Future<Map<String, Map<String, dynamic>>> viewResidents() {
+    return this.residentViewer.viewResidents();
+  }
 }

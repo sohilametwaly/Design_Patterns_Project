@@ -26,7 +26,7 @@ class _viewResidentListPageState extends State<viewResidentListPage> {
         centerTitle: true,
       ),
       body: FutureBuilder<Map<String, Map<String, dynamic>>>(
-        future: widget.manager.residentViewer.viewResidents(),
+        future: widget.manager.viewResidents(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
