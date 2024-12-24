@@ -20,7 +20,7 @@ class _viewResidentListPageState extends State<viewResidentListPage> {
   return Scaffold(
     appBar: AppBar(
       title: Text(
-        'View Resident List',
+        'Resident List',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       elevation: 0,
