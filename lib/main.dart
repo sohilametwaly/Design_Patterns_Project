@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/Manager/ResidentViewer.dart';
@@ -35,6 +36,16 @@ class MyApp extends StatelessWidget {
     ResidentManagement residentManagement = ResidentManagement();
     RoomAssigner roomAssigner = RoomAssigner();
     Receptionist receptionist = Receptionist(residentManagement, roomAssigner);
+    WorkerManager workerManager = WorkerManager();
+    Incometracker incometracker = Incometracker();
+    Roommonitor roommonitor = Roommonitor();
+    Residentviewer residentViewer = Residentviewer();
+
+    Manager m = Manager(
+        workerManager: workerManager,
+        incomeTracker: incometracker,
+        roomMonitor: roommonitor,
+        residentViewer: residentViewer);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

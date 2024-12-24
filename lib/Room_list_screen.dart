@@ -8,7 +8,6 @@ class RoomListScreen extends StatefulWidget {
   final Manager manager;
   RoomListScreen({required this.manager});
 }
-
 class _RoomListScreenState extends State<RoomListScreen> {
   String selectedRoomType = 'single';
   String selectedAvailability = 'All';

@@ -39,3 +39,4 @@ class WorkerManager {
     return workersMap;
   }
 }
+
