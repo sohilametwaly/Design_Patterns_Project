@@ -1,4 +1,3 @@
-import 'package:design_patterns_project/Database.dart';
 import 'package:design_patterns_project/view-resident.dart';
 // import 'package:design_patterns_project/worker-list.dart';
 
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //title: 'Firebase Sign Up',
-      home: WorkerListPage(manager: m),
+      home: LoginPage(),
     );
   }
 }
