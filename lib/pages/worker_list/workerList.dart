@@ -132,33 +132,14 @@ class _WorkerListPageState extends State<WorkerListPage> {
           final workers = snapshot.data!;
 
           return ListView.builder(
+            padding: EdgeInsets.all(16),
             itemCount: workers.length,
             itemBuilder: (context, index) {
               final worker = workers[index];
 
               return GestureDetector(
                 onTap: () => _viewWorkerDetails(worker),
-                child: Card(
-                  child: ListTile(
-                    title: Text(worker.name),
-                    subtitle: Text(worker.jobTitle),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editWorker(worker),
-                          tooltip: 'Edit Worker',
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _confirmDelete(worker.id),
-                          tooltip: 'Delete Worker',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                child: _buildWorkerCard(worker),
               );
             },
           );

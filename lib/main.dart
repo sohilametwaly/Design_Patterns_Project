@@ -1,6 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:design_patterns_project/worker-list.dart';
-
 import 'package:flutter/material.dart';
 import 'pages/login/loginpage.dart';
 
