@@ -39,14 +39,15 @@ class Manager {
   }
 
   // Income Tracking
- void getWeeklyReport() {
-  this.incomeTracker.getWeeklyReport();
-  }
-void getMonthlyReport() {
-    this.incomeTracker.getMonthlyReport();
+  Future<Map<String, dynamic>> getWeeklyReport() {
+    return this.incomeTracker.getWeeklyReport();
   }
 
- void getAnnualReport() {
-   this.incomeTracker.getAnnualReport();
+  Future<Map<String, dynamic>> getMonthlyReport() {
+    return this.incomeTracker.getMonthlyReport();
+  }
+
+  Future<Map<String, dynamic>> getAnnualReport() {
+    return this.incomeTracker.getAnnualReport();
   }
 }
