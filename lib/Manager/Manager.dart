@@ -1,8 +1,8 @@
-import 'package:design_patterns_project/Classes/Manager/IncomeTracker.dart';
 import 'package:design_patterns_project/Classes/Manager/ResidentViewer.dart';
 import 'package:design_patterns_project/Classes/Manager/RoomMonitor.dart';
 import 'package:design_patterns_project/Classes/Manager/WorkerManager.dart';
 import 'package:design_patterns_project/Classes/worker.dart';
+import 'package:design_patterns_project/Manager/IncomeTracker.dart';
 
 class Manager {
   final WorkerManager workerManager;
@@ -16,16 +16,16 @@ class Manager {
       required this.roomMonitor,
       required this.residentViewer});
 
-  Future<void> addWorker(Worker worker) async {
-    await this.workerManager.addWorker(worker);
+  void addWorker(Worker worker) {
+    this.workerManager.addWorker(worker);
   }
 
-  Future<void> editWorker(String id, Worker newWorker) async {
-    await this.workerManager.editWorker(id, newWorker);
+  void editWorker(String id, Worker newWorker) {
+    this.workerManager.editWorker(id, newWorker);
   }
 
-  Future<void> deleteWorker(String id) async {
-    await this.workerManager.deleteWorker(id);
+  void deleteWorker(String id) {
+    this.workerManager.deleteWorker(id);
   }
 
   // Workers Details
@@ -49,9 +49,5 @@ class Manager {
 
   Future<Map<String, dynamic>> getAnnualReport() {
     return this.incomeTracker.getAnnualReport();
-  }
-
-  Future<Map<String, Map<String, dynamic>>> viewResidents() {
-    return this.residentViewer.viewResidents();
   }
 }

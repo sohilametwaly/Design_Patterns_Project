@@ -55,7 +55,7 @@ class _EditWorkerPageState extends State<EditWorkerPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_nameController.text.isNotEmpty &&
                     _jobTitleController.text.isNotEmpty) {
                   widget.worker.name = _nameController.text;
@@ -64,7 +64,8 @@ class _EditWorkerPageState extends State<EditWorkerPage> {
                   widget.worker.salary =
                       double.tryParse(_salaryController.text) ?? 0.0;
 
-                  widget.manager.editWorker(widget.worker.id, widget.worker);
+                  await widget.manager
+                      .editWorker(widget.worker.id, widget.worker);
                   Navigator.pop(context, true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

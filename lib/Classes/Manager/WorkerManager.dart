@@ -4,15 +4,15 @@ import 'package:design_patterns_project/Classes/worker.dart';
 class WorkerManager {
   final Database _db = Database.getInstance();
 
-  void addWorker(Worker worker) async {
+  Future<void> addWorker(Worker worker) async {
     await _db.writeData('workers/${worker.id}', worker.toMap());
   }
 
-  void editWorker(String id, Worker newWorker) async {
+  Future<void> editWorker(String id, Worker newWorker) async {
     await _db.writeData('workers/$id', newWorker.toMap());
   }
 
-  void deleteWorker(String id) async {
+  Future<void> deleteWorker(String id) async {
     await _db.deleteData('workers/$id');
   }
 

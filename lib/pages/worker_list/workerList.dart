@@ -20,6 +20,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
   @override
   void initState() {
     super.initState();
+    print("YOU ARE HERER");
     _workersFuture = _fetchWorkers();
   }
 
@@ -47,28 +48,27 @@ class _WorkerListPageState extends State<WorkerListPage> {
     );
   }
 
-  void _editWorker(Worker worker) {
-    final result = Navigator.push(
+  void _editWorker(Worker worker) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
             EditWorkerPage(worker: worker, manager: widget.manager),
       ),
     );
-
     setState(() {
       _workersFuture = _fetchWorkers();
     });
   }
 
-  void _navigateToAddWorkerPage() {
-    final result = Navigator.push(
+  void _navigateToAddWorkerPage() async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddWorkerPage(manager: widget.manager),
       ),
     );
-
+    print("HELPPPPPP");
     setState(() {
       _workersFuture = _fetchWorkers();
     });
@@ -83,8 +83,8 @@ class _WorkerListPageState extends State<WorkerListPage> {
           content: Text('Are you sure you want to delete this worker?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-                widget.manager.deleteWorker(workerId);
+              onPressed: () async {
+                await widget.manager.deleteWorker(workerId);
                 Navigator.pop(context);
                 setState(() {
                   _workersFuture = _fetchWorkers();

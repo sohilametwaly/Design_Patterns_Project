@@ -18,7 +18,7 @@ class _AddWorkerPageState extends State<AddWorkerPage> {
   final _phoneController = TextEditingController();
   final _salaryController = TextEditingController();
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState?.validate() ?? false) {
       final worker = Worker(
         DateTime.now().millisecondsSinceEpoch.toString(),
@@ -28,7 +28,7 @@ class _AddWorkerPageState extends State<AddWorkerPage> {
         _jobTitleController.text,
       );
 
-      widget.manager.addWorker(worker);
+      await widget.manager.addWorker(worker);
       Navigator.pop(context, true);
     }
   }
@@ -89,7 +89,9 @@ class _AddWorkerPageState extends State<AddWorkerPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _submitForm,
+                onPressed: () async {
+                  await _submitForm();
+                },
                 child: Text('Add Worker'),
               ),
             ],
