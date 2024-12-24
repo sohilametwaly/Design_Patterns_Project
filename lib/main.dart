@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //title: 'Firebase Sign Up',
-      home: ManagerChart(manager: manager),
+      home: IncomeReportPage(manager: manager),
     );
   }
 }

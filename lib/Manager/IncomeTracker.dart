@@ -24,24 +24,6 @@ class Incometracker {
     await generateIncomeReport("Annual", startOfYear, endOfYear);
   }
 
-  // Future<List<Map<String, dynamic>>> fetchResidentsByDateRange(
-  //     DateTime startDate, DateTime endDate) async {
-  //   Database database = Database.getInstance();
-
-  //   final snapshot = await database.readData('bookings');
-
-  //   if (snapshot.value != null) {
-  //     return (snapshot.value as Map).entries.map((entry) {
-  //       return {
-  //         "checkInDate": entry.value['id']['checkInDate'],
-  //         "checkOutDate": entry.value['id']['checkOutDate'],
-  //         "total": entry.value['id']['Total'],
-  //       };
-  //     }).toList();
-  //   } else {
-  //     return [];
-  //   }
-  // }
   Future<List<Map<String, dynamic>>> fetchResidentsByDateRange(
       DateTime startDate, DateTime endDate) async {
     final snapshot = await database.readData('bookings');
@@ -77,41 +59,6 @@ class Incometracker {
     }
   }
 
-//   Future<void> generateIncomeReport(
-//       String reportType, DateTime startDate, DateTime endDate) async {
-//     try {
-//       final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
-//       final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
-//       final residents = await fetchResidentsByDateRange(startDate, endDate);
-//       double totalIncome = 0;
-//       for (var resident in residents) {
-//         final checkInTimestamp = resident['id']["checkInDate"] as int;
-//         final checkOutTimestamp = resident['id']["checkOutDate"] as int;
-//         final TotalCost = resident['id']["total"] as int;
-
-//         final stayStart = DateTime.fromMillisecondsSinceEpoch(
-//                 (checkInTimestamp > startTimestamp
-//                         ? checkInTimestamp
-//                         : startTimestamp) *
-//                     1000)
-//             .toUtc();
-//         final stayEnd = DateTime.fromMillisecondsSinceEpoch(
-//                 (checkOutTimestamp < endTimestamp
-//                         ? checkOutTimestamp
-//                         : endTimestamp) *
-//                     1000)
-//             .toUtc();
-
-//         if (!stayEnd.isBefore(stayStart)) {
-//           final stayDuration = stayEnd.difference(stayStart).inDays;
-//           totalIncome += TotalCost;
-//         }
-//       }
-//     } catch (e) {
-//       print("Error generating $reportType income report: $e");
-//     }
-//   }
-// }
   Future<void> generateIncomeReport(
       String reportType, DateTime startDate, DateTime endDate) async {
     try {
