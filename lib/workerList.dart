@@ -1,3 +1,5 @@
+import 'package:design_patterns_project/editWorkerPage.dart';
+import 'package:design_patterns_project/workerDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/worker.dart';
@@ -38,28 +40,28 @@ class _WorkerListPageState extends State<WorkerListPage> {
   }
 
   void _viewWorkerDetails(Worker worker) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => WorkerDetailsPage(worker: worker),
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WorkerDetailsPage(worker: worker),
+      ),
+    );
   }
 
   void _editWorker(Worker worker) async {
-    // final result = await Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) =>
-    //         EditWorkerPage(worker: worker, manager: widget.manager),
-    //   ),
-    // );
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            EditWorkerPage(worker: worker, manager: widget.manager),
+      ),
+    );
 
-    // if (result == true) {
-    //   setState(() {
-    //     _workersFuture = _fetchWorkers();
-    //   });
-    // }
+    if (result == true) {
+      setState(() {
+        _workersFuture = _fetchWorkers();
+      });
+    }
   }
 
   void _navigateToAddWorkerPage() async {
