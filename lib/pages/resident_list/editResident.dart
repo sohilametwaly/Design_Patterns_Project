@@ -232,8 +232,25 @@ class _EditResidentPageState extends State<EditResidentPage> {
                           print(
                               "Resident added successfully with room details: $roomDetails");
                         } else {
-                          print(
-                              "Failed to add resident. No suitable room available.");
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("No Available Rooms"),
+                                content: const Text(
+                                    "Sorry, there are no available rooms to assign to this resident."),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("OK"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       }).catchError((error) {
                         print(

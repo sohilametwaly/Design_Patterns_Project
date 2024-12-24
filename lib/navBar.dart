@@ -37,7 +37,14 @@ class _NavBarState extends State<NavBar> {
     ];
 
     return Scaffold(
-      body: managerPages[_selectedIndex],
+      body: _selectedIndex < managerPages.length
+          ? Navigator(
+              key: ValueKey(_selectedIndex),
+              onGenerateRoute: (_) => MaterialPageRoute(
+                builder: (_) => managerPages[_selectedIndex],
+              ),
+            )
+          : null,
       bottomNavigationBar: BottomNavigationBar(
         items: navItems,
         currentIndex: _selectedIndex,

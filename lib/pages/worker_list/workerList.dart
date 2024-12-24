@@ -23,6 +23,12 @@ class _WorkerListPageState extends State<WorkerListPage> {
     _workersFuture = _fetchWorkers();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _workersFuture = _fetchWorkers();
+  }
+
   Future<List<Worker>> _fetchWorkers() async {
     final workerData = await widget.manager.viewWorkers();
     return workerData.entries.map((entry) {
@@ -41,8 +47,8 @@ class _WorkerListPageState extends State<WorkerListPage> {
     );
   }
 
-  void _editWorker(Worker worker) async {
-    final result = await Navigator.push(
+  void _editWorker(Worker worker) {
+    final result = Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
@@ -50,26 +56,22 @@ class _WorkerListPageState extends State<WorkerListPage> {
       ),
     );
 
-    if (result == true) {
-      setState(() {
-        _workersFuture = _fetchWorkers();
-      });
-    }
+    setState(() {
+      _workersFuture = _fetchWorkers();
+    });
   }
 
-  void _navigateToAddWorkerPage() async {
-    final result = await Navigator.push(
+  void _navigateToAddWorkerPage() {
+    final result = Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddWorkerPage(manager: widget.manager),
       ),
     );
 
-    if (result == true) {
-      setState(() {
-        _workersFuture = _fetchWorkers();
-      });
-    }
+    setState(() {
+      _workersFuture = _fetchWorkers();
+    });
   }
 
   void _confirmDelete(String workerId) {
@@ -107,7 +109,6 @@ class _WorkerListPageState extends State<WorkerListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Workers', style: TextStyle(fontWeight: FontWeight.bold)),
-        // backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
         elevation: 0,
         centerTitle: true,
         flexibleSpace: Container(),

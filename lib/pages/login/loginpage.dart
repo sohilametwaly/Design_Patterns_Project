@@ -1,16 +1,21 @@
-import 'package:design_patterns_project/Manager/IncomeTracker.dart';
-import 'package:design_patterns_project/Manager/Manager.dart';
-import 'package:design_patterns_project/Manager/ResidentViewer.dart';
-import 'package:design_patterns_project/Manager/RoomMonitor.dart';
-import 'package:design_patterns_project/Manager/WorkerManager.dart';
-import 'package:design_patterns_project/Receptionist.dart';
-import 'package:design_patterns_project/ResidentManagement.dart';
-import 'package:design_patterns_project/navBar.dart';
-import 'package:design_patterns_project/residentList.dart';
-import 'package:design_patterns_project/roomAssigner.dart';
-import 'package:flutter/material.dart';
+import 'package:design_patterns_project/Classes/Manager/IncomeTracker.dart';
+import 'package:design_patterns_project/Classes/Manager/Manager.dart';
+import 'package:design_patterns_project/Classes/Manager/ResidentViewer.dart';
+import 'package:design_patterns_project/Classes/Manager/RoomMonitor.dart';
+import 'package:design_patterns_project/Classes/Manager/WorkerManager.dart';
+import 'package:design_patterns_project/Classes/Receptionist.dart';
+import 'package:design_patterns_project/Classes/ResidentManagement.dart';
 import 'package:design_patterns_project/Classes/proxy/proxyauth.dart';
+import 'package:design_patterns_project/Classes/roomAssigner.dart';
+import 'package:design_patterns_project/Classes/singleton/Database.dart';
+import 'package:design_patterns_project/forgetPassword.dart';
+import 'package:design_patterns_project/navBar.dart';
+import 'package:design_patterns_project/pages/resident_list/residentList.dart';
 import 'package:design_patterns_project/pages/signup/signuppage.dart';
+
+import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class LoginPage extends StatelessWidget {
   Database database = Database.getInstance();
@@ -84,15 +89,15 @@ class LoginPage extends StatelessWidget {
 
                   if (currentUser != null) {
                     String userId = currentUser.uid;
-                    bool isManager =
-                        await database.readData('users/$userId/isManager');
+                    Map<String, dynamic> user =
+                        await database.readData('users/$userId');
 
-                    if (isManager) {
+                    if (user['isManager']) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              NavBar(isManager: isManager, manager: manager),
+                          builder: (context) => NavBar(
+                              isManager: user['isManager'], manager: manager),
                         ),
                       );
                     } else {
@@ -128,6 +133,15 @@ class LoginPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SignUpPage()));
               },
               child: Text("Don't have an account? Sign Up"),
+            ),
+            SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                // Navigate to the Login page
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Forgetpassword()));
+              },
+              child: Text("Forget password?"),
             ),
           ],
         ),
