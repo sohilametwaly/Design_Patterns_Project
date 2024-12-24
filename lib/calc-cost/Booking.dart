@@ -36,8 +36,4 @@ class Booking {
     TotalCost = (boardingCost + roomCost);
     return TotalCost;
   }
-
-  // void displayDetails() {
-  //   print('$DurationOfStay $boardingOption $room $id');
-  // }
 }

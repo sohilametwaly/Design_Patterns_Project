@@ -3,44 +3,49 @@ import 'package:design_patterns_project/calc-cost/Booking.dart';
 
 class Incometracker {
   Database database = Database.getInstance();
-  void getWeeklyReport() async {
+
+  Future<Map<String, dynamic>> getWeeklyReport() async {
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
     final endOfWeek = startOfWeek.add(Duration(days: 6));
-   await generateIncomeReport("Weekly", startOfWeek, endOfWeek);
+    final report = await generateIncomeReport("Weekly", startOfWeek, endOfWeek);
+    // print("Labels (Days of the week): ${report['labels']}");
+    // print("Data Sales (Income): ${report['dataSales']}");
+    return report;
   }
 
-    void  getMonthlyReport() async {
+  Future<Map<String, dynamic>> getMonthlyReport() async {
     final now = DateTime.now();
     final startOfMonth = DateTime(now.year, now.month, 1);
     final endOfMonth = DateTime(now.year, now.month + 1, 0);
-   await generateIncomeReport("Monthly", startOfMonth, endOfMonth);
+    final report =
+        await generateIncomeReport("Monthly", startOfMonth, endOfMonth);
+    return report;
   }
 
-     void  getAnnualReport() async {
+  Future<Map<String, dynamic>> getAnnualReport() async {
     final now = DateTime.now();
     final startOfYear = DateTime(now.year, 1, 1);
     final endOfYear = DateTime(now.year, 12, 31);
-    await generateIncomeReport("Annual", startOfYear, endOfYear);
+    final report = await generateIncomeReport("Annual", startOfYear, endOfYear);
+    // print("Labels (Months): ${report['labels']}");
+    // print("Data Sales (Income): ${report['dataSales']}");
+    return report;
   }
 
   Future<List<Map<String, dynamic>>> fetchResidentsByDateRange(
       DateTime startDate, DateTime endDate) async {
     final snapshot = await database.readData('bookings');
 
-    // Validate snapshot and cast it to a Map
     if (snapshot != null && snapshot is Map<dynamic, dynamic>) {
       return snapshot.entries
           .map((entry) {
-            // Safely cast the entry value to Map<String, dynamic>
             final booking = Map<String, dynamic>.from(entry.value as Map);
 
-            // Extract the required fields at the root level
-            final total = booking['Total'] as int? ?? 0; // Default to 0 if null
+            final total = booking['Total'] as int? ?? 0;
             final checkInDate = booking['checkInDate'] as String?;
             final checkOutDate = booking['checkOutDate'] as String?;
 
-            // Ensure dates are present and valid
             if (checkInDate != null && checkOutDate != null) {
               return {
                 "checkInDate":
@@ -52,78 +57,115 @@ class Incometracker {
             }
             return null; // Skip invalid entries
           })
-          .whereType<Map<String, dynamic>>() // Remove null entries
+          .whereType<Map<String, dynamic>>()
           .toList();
     } else {
       return [];
     }
   }
 
-//   Future<double> generateIncomeReport(
-//       String reportType, DateTime startDate, DateTime endDate) async {
-//     try {
-//       final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
-//       final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
+  Future<Map<String, dynamic>> generateIncomeReport(
+      String reportType, DateTime startDate, DateTime endDate) async {
+    try {
+      final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
+      final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
 
-//       // Fetch data within the date range
-//       final residents = await fetchResidentsByDateRange(startDate, endDate);
-//       double totalIncome = 0;
-//       print(residents.length);
+      final residents = await fetchResidentsByDateRange(startDate, endDate);
+      double totalIncome = 0;
+      List<String> labels = [];
+      List<double> dataSales = [];
 
-//       for (var resident in residents) {
-//         // Parse timestamps
-//         final checkInTimestamp = resident["checkInDate"] ?? 0;
-//         final checkOutTimestamp = resident["checkOutDate"] ?? 0;
-//         final totalCost = resident["total"] ?? 0;
-//         print('total cost $totalCost');
+      if (reportType == "Weekly") {
+        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        dataSales = List.filled(7, 0.0); // Initialize for 7 days of the week
 
-//         return totalIncome += totalCost;
+        for (var resident in residents) {
+          final checkInDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkInDate"]);
+          final checkOutDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkOutDate"]);
+          final totalCost = resident["total"] ?? 0;
 
-//         // Validate timestamps
-//         // final stayStart = DateTime.fromMillisecondsSinceEpoch(
-//         //         (checkInTimestamp > startTimestamp
-//         //                 ? checkInTimestamp
-//         //                 : startTimestamp) *
-//         //             1000)
-//         //     .toUtc();
-//         // final stayEnd = DateTime.fromMillisecondsSinceEpoch(
-//         //         (checkOutTimestamp < endTimestamp
-//         //                 ? checkOutTimestamp
-//         //                 : endTimestamp) *
-//         //             1000)
-//         //     .toUtc();
+          // Determine the weekday index
+          final startDayOfWeek = checkInDate.weekday -
+              1; // Convert to 0-based index (0: Monday, 6: Sunday)
+          final endDayOfWeek = checkOutDate.weekday - 1;
 
-//         // if (!stayEnd.isBefore(stayStart)) {
-//         //   totalIncome += totalCost;
-//         // }
-//       }
+          if (checkInDate.isBefore(endDate) &&
+              checkOutDate.isAfter(startDate)) {
+            // Add the income for the relevant days
+            for (int i = startDayOfWeek; i <= endDayOfWeek; i++) {
+              dataSales[i] +=
+                  totalCost / (checkOutDate.difference(checkInDate).inDays + 1);
+            }
+          }
+        }
+      } else if (reportType == "Monthly") {
+        labels = List.generate(endDate.day, (index) => (index + 1).toString());
+        dataSales = List.filled(endDate.day, 0.0);
 
-//       print(
-//           "$reportType income report generated successfully: Total Income = $totalIncome");
-//     } catch (e) {
-//       print("Error generating $reportType income report: $e");
-//       return 0.0;
-//     }
-//   }
+        for (var resident in residents) {
+          final checkInDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkInDate"]);
+          final checkOutDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkOutDate"]);
+          final totalCost = resident["total"] ?? 0;
 
-Future<void> generateIncomeReport(
-    String reportType, DateTime startDate, DateTime endDate) async {
-  try {
-    final residents = await fetchResidentsByDateRange(startDate, endDate);
-    double totalIncome = 0;
+          if (checkInDate.isBefore(endDate) &&
+              checkOutDate.isAfter(startDate)) {
+            final startDayOfMonth = checkInDate.day - 1;
+            final endDayOfMonth = checkOutDate.day - 1;
 
-    for (var resident in residents) {
-      // Parse the total cost
-      final totalCost = resident["total"] ?? 0;
-      totalIncome += totalCost; // Accumulate total income
+            for (int i = startDayOfMonth; i <= endDayOfMonth; i++) {
+              dataSales[i] +=
+                  totalCost / (checkOutDate.difference(checkInDate).inDays + 1);
+            }
+          }
+        }
+      } else if (reportType == "Annual") {
+        labels = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec'
+        ];
+        dataSales = List.filled(12, 0.0);
+
+        for (var resident in residents) {
+          final checkInDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkInDate"]);
+          final checkOutDate =
+              DateTime.fromMillisecondsSinceEpoch(resident["checkOutDate"]);
+          final totalCost = resident["total"] ?? 0;
+
+          if (checkInDate.isBefore(endDate) &&
+              checkOutDate.isAfter(startDate)) {
+            final startMonth = checkInDate.month - 1; // 0-based month index
+            final endMonth = checkOutDate.month - 1;
+
+            for (int i = startMonth; i <= endMonth; i++) {
+              dataSales[i] +=
+                  totalCost / (checkOutDate.difference(checkInDate).inDays + 1);
+            }
+          }
+        }
+      }
+
+      return {
+        'labels': labels,
+        'dataSales': dataSales,
+      };
+    } catch (e) {
+      print("Error generating $reportType income report: $e");
+      return {'labels': [], 'dataSales': []};
     }
-
-    print(
-        "$reportType income report generated successfully: Total Income = $totalIncome");
-    // Return the total income after processing all residents
-  } catch (e) {
-    print("Error generating $reportType income report: $e");
-    // Return a default value in case of an error
- }
+  }
 }
- }
