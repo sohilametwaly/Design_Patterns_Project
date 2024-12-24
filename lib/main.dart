@@ -9,6 +9,7 @@ import 'package:design_patterns_project/ResidentManagement.dart';
 import 'package:design_patterns_project/residentList.dart';
 import 'package:design_patterns_project/roomAssigner.dart';
 import 'package:design_patterns_project/signup/signuppage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'login/loginpage.dart';
 
@@ -16,6 +17,7 @@ import 'Manager/WorkerManager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

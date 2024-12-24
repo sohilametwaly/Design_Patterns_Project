@@ -1,11 +1,7 @@
-import 'package:design_patterns_project/editWorkerPage.dart';
-import 'package:design_patterns_project/workerDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/worker.dart';
 import 'package:design_patterns_project/addWorkerPage.dart';
-
-
 
 class WorkerListPage extends StatefulWidget {
   final Manager manager;
@@ -29,39 +25,34 @@ class _WorkerListPageState extends State<WorkerListPage> {
     final workerData = await widget.manager.viewWorkers();
     return workerData.entries.map((entry) {
       final workerMap = entry.value;
-      return Worker(
-          entry.key,
-          workerMap['name'],
-          workerMap['phone'],
-          workerMap['salary'],
-          workerMap['jobTitle']
-      );
+      return Worker(entry.key, workerMap['name'], workerMap['phone'],
+          workerMap['salary'], workerMap['jobTitle']);
     }).toList();
   }
 
   void _viewWorkerDetails(Worker worker) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => WorkerDetailsPage(worker: worker),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => WorkerDetailsPage(worker: worker),
+    //   ),
+    // );
   }
 
   void _editWorker(Worker worker) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            EditWorkerPage(worker: worker, manager: widget.manager),
-      ),
-    );
+    // final result = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) =>
+    //         EditWorkerPage(worker: worker, manager: widget.manager),
+    //   ),
+    // );
 
-    if (result == true) {
-      setState(() {
-        _workersFuture = _fetchWorkers();
-      });
-    }
+    // if (result == true) {
+    //   setState(() {
+    //     _workersFuture = _fetchWorkers();
+    //   });
+    // }
   }
 
   void _navigateToAddWorkerPage() async {
@@ -113,13 +104,11 @@ class _WorkerListPageState extends State<WorkerListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workers', style: TextStyle(fontWeight: FontWeight.bold )),
+        title: Text('Workers', style: TextStyle(fontWeight: FontWeight.bold)),
         // backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
         elevation: 0,
         centerTitle: true,
-        flexibleSpace: Container(
-
-        ),
+        flexibleSpace: Container(),
       ),
       body: FutureBuilder<List<Worker>>(
         future: _workersFuture,
@@ -159,8 +148,12 @@ class _WorkerListPageState extends State<WorkerListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddWorkerPage,
-        backgroundColor:Colors.deepPurpleAccent.withOpacity(0.8),
-        child: Icon(Icons.add, size: 28,color: Colors.white,),
+        backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
+        child: Icon(
+          Icons.add,
+          size: 28,
+          color: Colors.white,
+        ),
         tooltip: 'Add Worker',
       ),
     );
@@ -180,21 +173,31 @@ class _WorkerListPageState extends State<WorkerListPage> {
           backgroundColor: Colors.deepPurpleAccent.withOpacity(0.8),
           child: Text(
             worker.name[0].toUpperCase(),
-            style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
         title: Text(
           worker.name,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
+          overflow: TextOverflow.ellipsis, // Prevent text overflow
+          maxLines: 1, // Limit to 1 line
         ),
         subtitle: Row(
           children: [
-
-            Text(worker.jobTitle, style: TextStyle(color: Colors.grey[700],fontSize: 20)),
+            Flexible(
+              child: Text(
+                worker.jobTitle,
+                style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                overflow:
+                    TextOverflow.ellipsis, // Prevent overflow for jobTitle
+                maxLines: 1,
+              ),
+            ),
           ],
         ),
         trailing: Row(
@@ -204,7 +207,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
               shape: CircleBorder(),
               color: Colors.blueAccent.withOpacity(0.1),
               child: IconButton(
-                icon: Icon(Icons.edit, color: Colors.blueAccent, size: 30),
+                icon: Icon(Icons.edit, color: Colors.blueAccent, size: 27),
                 onPressed: () => _editWorker(worker),
                 tooltip: 'Edit Worker',
                 padding: EdgeInsets.all(8),
@@ -217,7 +220,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
               shape: CircleBorder(),
               color: Colors.redAccent.withOpacity(0.1),
               child: IconButton(
-                icon: Icon(Icons.delete, color: Colors.redAccent, size: 30),
+                icon: Icon(Icons.delete, color: Colors.redAccent, size: 27),
                 onPressed: () => _confirmDelete(worker.id),
                 tooltip: 'Delete Worker',
                 padding: EdgeInsets.all(8),
@@ -227,10 +230,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
             ),
           ],
         ),
-
       ),
- );
-}
-
-
+    );
+  }
 }
