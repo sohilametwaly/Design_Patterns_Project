@@ -19,6 +19,13 @@ class Resident {
     };
   }
 
+  Resident.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        name = map['name'],
+        email = map['email'],
+        phone = map['phone'],
+        booking = map['booking'];
+
   void pay() {
     print("Resident is paying");
   }

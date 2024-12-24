@@ -6,14 +6,16 @@ class ResidentManagement {
 
   void addResident(Resident resident) async {
     await _db.writeData('residents/${resident.id}', resident.toMap());
-    final String id =  DateTime.now().millisecondsSinceEpoch.toString();
-    
-    await _db.writeData('bookings/$id',resident.booking.toMap()); 
+
+    await _db.writeData('bookings/${resident.id}', resident.booking.toMap());
     print("added in resident management");
   }
 
   void editResident(String id, Resident newResident) async {
-    await _db.writeData('residents/$id', newResident.toMap());
+    await _db.updateData('residents/$id', newResident.toMap());
+
+    await _db.updateData(
+        'bookings/${newResident.id}', newResident.toMap()['booking']);
   }
 
   void deleteResident(String id) async {

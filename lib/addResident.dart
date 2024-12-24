@@ -187,7 +187,7 @@ class _AddResidentPageState extends State<AddResidentPage> {
                             Booking(
                               checkInDate!,
                               checkOutDate!,
-                              AbstractRoom('', roomTypeController.text),
+                              AbstractRoom('', roomTypeController.text, false),
                               Boardingoptionfactory.CreateBoardingOption(
                                   boardingOptionController.text),
                               costBoarding,

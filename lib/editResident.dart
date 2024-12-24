@@ -1,3 +1,12 @@
+import 'package:design_patterns_project/Abstract%20Boarding%20Option/BoardingOptionFactory.dart';
+import 'package:design_patterns_project/CostCalculationFactory.dart';
+import 'package:design_patterns_project/Database.dart';
+import 'package:design_patterns_project/Resident.dart';
+import 'package:design_patterns_project/RoomStrategy.dart';
+import 'package:design_patterns_project/RoomStrategyFactory.dart';
+import 'package:design_patterns_project/abstract_room.dart';
+import 'package:design_patterns_project/calc-cost/Booking.dart';
+import 'package:design_patterns_project/calc-cost/CostCalculationStrategy.dart';
 import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Receptionist.dart';
 // import 'Resident.dart';
@@ -28,8 +37,8 @@ class _EditResidentPageState extends State<EditResidentPage> {
   late TextEditingController phoneController;
   late TextEditingController emailController;
   late TextEditingController roomIdController;
-  late TextEditingController roomPriceController;
-  late TextEditingController boardingCostController;
+  // late TextEditingController roomPriceController;
+  // late TextEditingController boardingCostController;
 
   bool isOccupied = false;
   late String selectedBoardingName;
@@ -39,13 +48,14 @@ class _EditResidentPageState extends State<EditResidentPage> {
   DateTime? checkOutDate;
   final checkInController = TextEditingController();
   final checkOutController = TextEditingController();
+  Database database = Database.getInstance();
 
   final List<String> boardingOptions = [
     'Full Board',
     'Half Board',
-    'Bed & Breakfast'
+    'Bed and Breakfast'
   ];
-  final List<String> roomTypes = ['Single', 'Double', 'Triple'];
+  final List<String> roomTypes = ['single', 'double', 'triple'];
 
   @override
   void initState() {
@@ -57,10 +67,10 @@ class _EditResidentPageState extends State<EditResidentPage> {
     emailController = TextEditingController(text: widget.data['email']);
     roomIdController = TextEditingController(
         text: widget.data['booking']['room']['id'].toString());
-    roomPriceController = TextEditingController(
-        text: widget.data['booking']['room']['price'].toString());
-    boardingCostController = TextEditingController(
-        text: widget.data['booking']['boarding']['costPerNight'].toString());
+    // roomPriceController = TextEditingController(
+    //     text: widget.data['booking']['room']['price'].toString());
+    // boardingCostController = TextEditingController(
+    //     text: widget.data['booking']['boarding']['costPerNight'].toString());
 
     // Room and Boarding Data
     selectedRoomType = widget.data['booking']['room']['roomType'];
@@ -138,19 +148,19 @@ class _EditResidentPageState extends State<EditResidentPage> {
               SizedBox(height: 20),
               Text('Room Details',
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              TextFormField(
-                controller: roomPriceController,
-                decoration: InputDecoration(labelText: 'Room Price'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null ||
-                      double.tryParse(value) == null ||
-                      double.parse(value) <= 0) {
-                    return 'Valid price is required';
-                  }
-                  return null;
-                },
-              ),
+              // TextFormField(
+              //   controller: roomPriceController,
+              //   decoration: InputDecoration(labelText: 'Room Price'),
+              //   keyboardType: TextInputType.number,
+              //   validator: (value) {
+              //     if (value == null ||
+              //         double.tryParse(value) == null ||
+              //         double.parse(value) <= 0) {
+              //       return 'Valid price is required';
+              //     }
+              //     return null;
+              //   },
+              // ),
               DropdownButtonFormField<String>(
                 value: roomTypes.contains(selectedRoomType)
                     ? selectedRoomType
@@ -187,11 +197,11 @@ class _EditResidentPageState extends State<EditResidentPage> {
                     setState(() => selectedBoardingName = value!),
                 decoration: InputDecoration(labelText: 'Boarding Name'),
               ),
-              TextFormField(
-                controller: boardingCostController,
-                decoration: InputDecoration(labelText: 'Cost Per Night'),
-                keyboardType: TextInputType.number,
-              ),
+              // TextFormField(
+              //   controller: boardingCostController,
+              //   decoration: InputDecoration(labelText: 'Cost Per Night'),
+              //   keyboardType: TextInputType.number,
+              // ),
 
               SizedBox(height: 20),
               Text('Booking Dates',
@@ -204,7 +214,69 @@ class _EditResidentPageState extends State<EditResidentPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Save data
+                    CostCalculationStrategy costBoarding =
+                        CostCalculationFactory.CreateBoardingOption(
+                            selectedBoardingName);
+                    Roomstrategy costRoom =
+                        RoomStrategyFactory.CreateBoardingOption(
+                            selectedRoomType);
+                    final resident = Resident(
+                        widget.residentId,
+                        nameController.text,
+                        emailController.text,
+                        phoneController.text,
+                        Booking(
+                          checkInDate!,
+                          checkOutDate!,
+                          AbstractRoom(
+                              widget.data['booking']['room']['id'],
+                              selectedRoomType,
+                              widget.data['booking']['room']['occupied']),
+                          Boardingoptionfactory.CreateBoardingOption(
+                              selectedBoardingName),
+                          costBoarding,
+                          costRoom,
+                        ));
+                    if (widget.data['booking']['room']['roomType'] !=
+                        selectedRoomType) {
+                      print(widget.data['booking']['room']['roomType']);
+                      print(selectedRoomType);
+                      widget.receptionist
+                          .assignRoom(resident, selectedRoomType)
+                          .then((roomDetails) {
+                        print(
+                            "Resident added successfully with room details: $roomDetails");
+                        if (roomDetails != null) {
+                          // Update the resident's booking with the assigned room details
+                          String id = widget.data['booking']['room']['id'];
+
+                          Map<String, dynamic> updateData = {'occupied': false};
+                          database.updateData('Rooms/${id}', updateData);
+                          resident.booking.room.occupied = true;
+                          resident.booking.room.roomNumber =
+                              roomDetails['roomId'].toString();
+                          // resident.booking.room.pricePerNight = double.parse(roomDetails['pricePerNight']);
+                          resident.booking.room.roomType =
+                              roomDetails['roomType'];
+
+                          // Add the resident to resident management
+                          widget.receptionist
+                              .editResident(widget.residentId, resident);
+
+                          print(
+                              "Resident added successfully with room details: $roomDetails");
+                        } else {
+                          print(
+                              "Failed to add resident. No suitable room available.");
+                        }
+                      }).catchError((error) {
+                        print(
+                            "An error occurred while assigning a room: $error");
+                      });
+                    }
+
+                    widget.receptionist
+                        .editResident(widget.residentId, resident);
                     Navigator.pop(context);
                   }
                 },

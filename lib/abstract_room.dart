@@ -6,10 +6,10 @@ import 'firebase_options.dart';
 class AbstractRoom {
   String roomNumber;
   // double pricePerNight;
-  bool occupied = false;
+  bool occupied;
   String roomType;
 
-  AbstractRoom(this.roomNumber, this.roomType);
+  AbstractRoom(this.roomNumber, this.roomType, this.occupied);
 
   Map<String, dynamic> toMap() {
     return {
