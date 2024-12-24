@@ -33,28 +33,28 @@ class _WorkerListPageState extends State<WorkerListPage> {
   }
 
   void _viewWorkerDetails(Worker worker) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => WorkerDetailsPage(worker: worker),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => WorkerDetailsPage(worker: worker),
+    //   ),
+    // );
   }
 
   void _editWorker(Worker worker) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            EditWorkerPage(worker: worker, manager: widget.manager),
-      ),
-    );
+    // final result = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) =>
+    //         EditWorkerPage(worker: worker, manager: widget.manager),
+    //   ),
+    // );
 
-    if (result == true) {
-      setState(() {
-        _workersFuture = _fetchWorkers();
-      });
-    }
+    // if (result == true) {
+    //   setState(() {
+    //     _workersFuture = _fetchWorkers();
+    //   });
+    // }
   }
 
   void _navigateToAddWorkerPage() async {
@@ -197,15 +197,24 @@ class _WorkerListPageState extends State<WorkerListPage> {
         title: Text(
           worker.name,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
+          overflow: TextOverflow.ellipsis, // Prevent text overflow
+          maxLines: 1, // Limit to 1 line
         ),
         subtitle: Row(
           children: [
-            Text(worker.jobTitle,
-                style: TextStyle(color: Colors.grey[700], fontSize: 20)),
+            Flexible(
+              child: Text(
+                worker.jobTitle,
+                style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                overflow:
+                    TextOverflow.ellipsis, // Prevent overflow for jobTitle
+                maxLines: 1,
+              ),
+            ),
           ],
         ),
         trailing: Row(
@@ -215,7 +224,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
               shape: CircleBorder(),
               color: Colors.blueAccent.withOpacity(0.1),
               child: IconButton(
-                icon: Icon(Icons.edit, color: Colors.blueAccent, size: 30),
+                icon: Icon(Icons.edit, color: Colors.blueAccent, size: 27),
                 onPressed: () => _editWorker(worker),
                 tooltip: 'Edit Worker',
                 padding: EdgeInsets.all(8),
@@ -228,7 +237,7 @@ class _WorkerListPageState extends State<WorkerListPage> {
               shape: CircleBorder(),
               color: Colors.redAccent.withOpacity(0.1),
               child: IconButton(
-                icon: Icon(Icons.delete, color: Colors.redAccent, size: 30),
+                icon: Icon(Icons.delete, color: Colors.redAccent, size: 27),
                 onPressed: () => _confirmDelete(worker.id),
                 tooltip: 'Delete Worker',
                 padding: EdgeInsets.all(8),
