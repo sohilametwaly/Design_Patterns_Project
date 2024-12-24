@@ -1,6 +1,5 @@
-import 'package:design_patterns_project/login/loginpage.dart';
-import 'package:design_patterns_project/proxyauth.dart';
-import 'package:design_patterns_project/realauth.dart';
+import 'package:design_patterns_project/Classes/proxy/proxyauth.dart';
+import 'package:design_patterns_project/pages/login/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

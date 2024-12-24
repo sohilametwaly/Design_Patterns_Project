@@ -152,12 +152,6 @@ class _EditResidentPageState extends State<EditResidentPage> {
                 onChanged: (value) => setState(() => selectedRoomType = value!),
                 decoration: InputDecoration(labelText: 'Room Type'),
               ),
-              SwitchListTile(
-                title: Text('Occupied'),
-                value: isOccupied,
-                onChanged: (value) => setState(() => isOccupied = value),
-              ),
-
               SizedBox(height: 20),
               Text('Boarding Details',
                   style: TextStyle(fontWeight: FontWeight.bold)),
@@ -228,7 +222,6 @@ class _EditResidentPageState extends State<EditResidentPage> {
                           resident.booking.room.occupied = true;
                           resident.booking.room.roomNumber =
                               roomDetails['roomId'].toString();
-                          // resident.booking.room.pricePerNight = double.parse(roomDetails['pricePerNight']);
                           resident.booking.room.roomType =
                               roomDetails['roomType'];
 
