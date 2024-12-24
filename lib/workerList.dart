@@ -1,3 +1,5 @@
+import 'package:design_patterns_project/editWorkerPage.dart';
+import 'package:design_patterns_project/workerDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:design_patterns_project/Manager/Manager.dart';
 import 'package:design_patterns_project/worker.dart';

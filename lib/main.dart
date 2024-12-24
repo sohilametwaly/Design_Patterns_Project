@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //title: 'Firebase Sign Up',
-      home: ResidentListPage(receptionist: receptionist),
+      home: WorkerListPage(manager: m),
     );
   }
 }
