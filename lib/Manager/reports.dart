@@ -139,6 +139,7 @@ class _IncomeReportPageState extends State<IncomeReportPage> {
 
   void fetchIncomeReport() async {
     try {
+     
       switch (selectedReportType) {
         case 'Weekly':
           widget.manager.getWeeklyReport();
