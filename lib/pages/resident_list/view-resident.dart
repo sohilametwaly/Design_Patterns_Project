@@ -1,7 +1,6 @@
 import 'package:design_patterns_project/Classes/Manager/Manager.dart';
 import 'package:flutter/material.dart';
 //import 'Resident.dart';
-import '../../Classes/Receptionist.dart';
 import 'residentDetails.dart';
 
 class viewResidentListPage extends StatefulWidget {

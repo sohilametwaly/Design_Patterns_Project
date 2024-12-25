@@ -1,7 +1,5 @@
 import 'package:design_patterns_project/Classes/singleton/Database.dart';
-import 'package:design_patterns_project/Classes/Resident.dart';
 import 'package:flutter/material.dart';
-//import 'Resident.dart';
 import '../../Classes/Receptionist.dart';
 import 'residentDetails.dart';
 import 'addResident.dart';
@@ -18,6 +16,21 @@ class ResidentListPage extends StatefulWidget {
 
 class _ResidentListPageState extends State<ResidentListPage> {
   Database database = Database.getInstance();
+  late Future<Map<String, Map<String, dynamic>>> residents;
+
+  Future<Map<String, Map<String, dynamic>>> fetchResident() async {
+    return await widget.receptionist.viewResidents();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchResident();
+    setState(() {
+      residents = fetchResident();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,14 +166,17 @@ class _ResidentListPageState extends State<ResidentListPage> {
     );
   }
 
-  void _editResident(String id, Map<String, dynamic> data) {
-    Navigator.push(
+  void _editResident(String id, Map<String, dynamic> data) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditResidentPage(
             residentId: id, data: data, receptionist: widget.receptionist),
       ),
-    ).then((_) => setState(() {}));
+    );
+    setState(() {
+      print("here");
+    });
   }
 
   void _deleteResident(String id) async {

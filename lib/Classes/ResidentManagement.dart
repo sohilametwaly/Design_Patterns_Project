@@ -1,8 +1,10 @@
+import 'package:design_patterns_project/Classes/Manager/ResidentViewer.dart';
 import 'package:design_patterns_project/Classes/singleton/Database.dart';
 import 'Resident.dart';
 
 class ResidentManagement {
   final Database _db = Database.getInstance();
+  final Residentviewer _residentviewer = Residentviewer();
 
   void addResident(Resident resident) async {
     await _db.writeData('residents/${resident.id}', resident.toMap());
@@ -23,17 +25,8 @@ class ResidentManagement {
   }
 
   Future<Map<String, Map<String, dynamic>>> viewResidents() async {
-    final Map<dynamic, dynamic> rawData = await _db.readData("residents");
-    final Map<String, Map<String, dynamic>> residentsMap = {};
-
-    // Convert Map<dynamic, dynamic> to Map<String, Map<String, dynamic>>
-    rawData.forEach((key, value) {
-      if (value is Map<dynamic, dynamic>) {
-        residentsMap[key.toString()] = Map<String, dynamic>.from(value);
-      } else {
-        throw TypeError();
-      }
-    });
+    final Future<Map<String, Map<String, dynamic>>> residentsMap =
+        _residentviewer.viewResidents();
 
     return residentsMap;
   }

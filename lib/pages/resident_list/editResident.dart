@@ -197,7 +197,7 @@ class _EditResidentPageState extends State<EditResidentPage> {
                           checkOutDate!,
                           AbstractRoom(
                               widget.data['booking']['room']['id'],
-                              selectedRoomType,
+                              widget.data['booking']['room']['roomType'],
                               widget.data['booking']['room']['occupied']),
                           Boardingoptionfactory.CreateBoardingOption(
                               selectedBoardingName),
@@ -214,11 +214,13 @@ class _EditResidentPageState extends State<EditResidentPage> {
                         print(
                             "Resident added successfully with room details: $roomDetails");
                         if (roomDetails != null) {
+                          print(roomDetails);
                           // Update the resident's booking with the assigned room details
                           String id = widget.data['booking']['room']['id'];
 
                           Map<String, dynamic> updateData = {'occupied': false};
                           database.updateData('Rooms/${id}', updateData);
+
                           resident.booking.room.occupied = true;
                           resident.booking.room.roomNumber =
                               roomDetails['roomId'].toString();
@@ -242,8 +244,8 @@ class _EditResidentPageState extends State<EditResidentPage> {
                                 actions: [
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.pop(context);
+                                      // Navigator.of(context).pop();
+                                      Navigator.pop(context, true);
                                     },
                                     child: const Text("OK"),
                                   ),
@@ -260,7 +262,7 @@ class _EditResidentPageState extends State<EditResidentPage> {
 
                     widget.receptionist
                         .editResident(widget.residentId, resident);
-                    Navigator.pop(context);
+                    Navigator.pop(context, true);
                   }
                 },
                 child: Text('Save Changes'),

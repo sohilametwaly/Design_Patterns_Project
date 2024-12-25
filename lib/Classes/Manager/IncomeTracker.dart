@@ -1,5 +1,4 @@
 import 'package:design_patterns_project/Classes/singleton/Database.dart';
-import 'package:design_patterns_project/Classes/Booking.dart';
 
 class Incometracker {
   Database database = Database.getInstance();
@@ -65,11 +64,8 @@ class Incometracker {
   Future<Map<String, dynamic>> generateIncomeReport(
       String reportType, DateTime startDate, DateTime endDate) async {
     try {
-      final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
-      final endTimestamp = endDate.millisecondsSinceEpoch ~/ 1000;
-
       final residents = await fetchResidentsByDateRange(startDate, endDate);
-      double totalIncome = 0;
+
       List<String> labels = [];
       List<double> dataSales = [];
 
